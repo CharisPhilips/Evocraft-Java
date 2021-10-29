@@ -1,0 +1,64 @@
+/* 
+    Created on : Oct 17, 2017, 9:34:08 AM
+    Author     : zunayedhassan
+*/
+
+.zh-custom-menu-item,
+.zh-custom-menu-item .menu-item:focused {
+     -fx-background-color: #f4f4f4;
+}
+
+.zh-scrollpane > .viewport {
+   -fx-background-color: #f4f4f4;
+}
+
+.text-area.underlined-text-area .text {
+     -fx-underline: true ;
+     -fx-hbar-policy : never;
+     -fx-vbar-policy : never;
+     
+}
+.text-area.center-text-area .text {
+     -fx-text-alignment: center ;
+     -fx-hbar-policy : never;
+     -fx-vbar-policy : never;
+     
+}
+.text-area.left-text-area .text {
+     -fx-text-alignment: left ;
+     -fx-hbar-policy : never;
+     -fx-vbar-policy : never;
+     
+}
+.text-area.right-text-area .text {
+     -fx-text-alignment: right;
+     -fx-hbar-policy : never;
+     -fx-vbar-policy : never;
+}
+
+.text-area .text {
+     -fx-text-alignment: center ;
+     -fx-hbar-policy : never;
+     -fx-vbar-policy : never;
+}
+
+.text-area .scroll-pane {
+     -fx-hbar-policy : never;
+     -fx-vbar-policy : never;
+}
+
+.text-area {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
