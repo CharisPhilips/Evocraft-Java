@@ -56,7 +56,9 @@ public class Game extends AnimationTimer {
 	public void Play() {
 		tick = 1;
 		CreateGameMap();
-		InitializeDraw();
+		if (mUIGeneartor instanceof JavaUI) {
+			InitializeDraw();
+		}
 		this.start();
 	}
 
@@ -93,7 +95,9 @@ public class Game extends AnimationTimer {
 
 	private void Loop() {
 		tick++;
-		gameMap.getUI().InvalidateDraw();
+		if (mUIGeneartor instanceof JavaUI) {
+			gameMap.getUI().InvalidateDraw();
+		}
 		gameMap.Tick();
 		WinProcess();
 	}

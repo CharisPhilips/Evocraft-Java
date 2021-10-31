@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.kilcote.evocraft.engine.city.BasicCityModel;
 
-public class Client {
+public class JavaClient {
 	public static List<BasicCityModel> g_selectedCities = new ArrayList<BasicCityModel>();
 	
 	public static void clearSelectCities() {

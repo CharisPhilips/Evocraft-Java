@@ -4,7 +4,7 @@ import com.kilcote.evocraft.common.Settings;
 import com.kilcote.evocraft.engine.cell.GameCellModel;
 import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.utils.ResourceUtils;
-import com.kilcote.evocraft.views.game.Client;
+import com.kilcote.evocraft.views.game.JavaClient;
 import com.kilcote.evocraft.views.game._base.GameObjCellUI;
 
 import javafx.event.EventHandler;
@@ -65,8 +65,8 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 					if (event.getButton() == MouseButton.PRIMARY) {
 						if (event.getClickCount() == 2) {
 							if (BasicCityUI.this.getModel().playerId == 1) {
-								getModel().gameMap.SendWarriors(Client.g_selectedCities, BasicCityUI.this.getModel());
-								for(BasicCityModel x : Client.g_selectedCities) {
+								getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
+								for(BasicCityModel x : JavaClient.g_selectedCities) {
 									switch (Settings.style_Num) {
 									case 0:
 										SetUiColor((Shape)cityModel, BasicCityUI.this.getModel().playerId);
@@ -76,16 +76,16 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 										break;
 									}
 								}
-								Client.clearSelectCities();
+								JavaClient.clearSelectCities();
 							}
 						} else {
 							if (BasicCityUI.this.getModel().playerId == 1) {
-								if (!Client.g_selectedCities.contains(this)) {
-									Client.selectCity(BasicCityUI.this.getModel());
+								if (!JavaClient.g_selectedCities.contains(this)) {
+									JavaClient.selectCity(BasicCityUI.this.getModel());
 								}
 							} else if (BasicCityUI.this.getModel().playerId != 1) {
-								getModel().gameMap.SendWarriors(Client.g_selectedCities, BasicCityUI.this.getModel());
-								for(BasicCityModel x : Client.g_selectedCities) {
+								getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
+								for(BasicCityModel x : JavaClient.g_selectedCities) {
 									switch (Settings.style_Num) {
 									case 0:
 										SetUiColor((Shape) BasicCityUI.this.cityModel, BasicCityUI.this.getModel().playerId);
@@ -95,11 +95,11 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 										break;
 									}
 								}
-								Client.clearSelectCities();
+								JavaClient.clearSelectCities();
 							}
 						}
 					} else {
-						Client.deselectCity(BasicCityUI.this.getModel());
+						JavaClient.deselectCity(BasicCityUI.this.getModel());
 					}
 				}
 			});

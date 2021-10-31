@@ -53,7 +53,6 @@ public class GameMapUI extends GameObjCellUI<GameMap> {
 				).collect(Collectors.toList());
 		
 		for (Node unit : deletedUnits) {
-			System.out.println("InvalidateDraw:" + unit.getClass().getName());
 			parent.getChildren().remove(unit);
 		}
 
