@@ -4,16 +4,16 @@ import java.util.List;
 
 import com.kilcote.evocraft.engine.Game;
 import com.kilcote.evocraft.engine.bot._base.BasicBot;
-import com.kilcote.evocraft.engine.city.BasicCity;
+import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.engine.map.GameMap;
-import com.kilcote.evocraft.engine.unit.BasicUnit;
+import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 
 public class SimpleBot extends BasicBot {
 
 	int botStreakCnt = 0;
 	boolean botStreak = false;
 
-	public SimpleBot(GameMap map, List<BasicCity> cities, List<BasicUnit> Units, int botId) {
+	public SimpleBot(GameMap map, List<BasicCityModel> cities, List<BasicUnitModel> Units, int botId) {
 		this.map = map;
 		this.cities = cities;
 		this.units = Units;

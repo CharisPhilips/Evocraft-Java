@@ -6,9 +6,9 @@ import java.util.List;
 import com.kilcote.evocraft.common.Settings;
 import com.kilcote.evocraft.engine.Game;
 import com.kilcote.evocraft.engine.bot._base.BasicBot;
-import com.kilcote.evocraft.engine.city.BasicCity;
+import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.engine.map.GameMap;
-import com.kilcote.evocraft.engine.unit.BasicUnit;
+import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 
 import javafx.util.Pair;
 
@@ -16,26 +16,26 @@ public class RushBot extends BasicBot {
 
 	//---------------------------------------------- Fields ----------------------------------------------
 	//with bot cities
-	List<BasicCity> botCities = new ArrayList<BasicCity>();
-	List<BasicCity> overcapedBotCities = new ArrayList<BasicCity>();
+	List<BasicCityModel> botCities = new ArrayList<BasicCityModel>();
+	List<BasicCityModel> overcapedBotCities = new ArrayList<BasicCityModel>();
 
-	List<BasicCity> botCitiesUnderAttack = new ArrayList<BasicCity>();
-	List<List<BasicUnit>> botCitiesUnderAttackUnits = new ArrayList<List<BasicUnit>>();
+	List<BasicCityModel> botCitiesUnderAttack = new ArrayList<BasicCityModel>();
+	List<List<BasicUnitModel>> botCitiesUnderAttackUnits = new ArrayList<List<BasicUnitModel>>();
 
 	//With enemy cities
-	List<BasicCity> rushingCities = new ArrayList<BasicCity>();
-	List<BasicCity> canAttackDirectly = new ArrayList<BasicCity>();
+	List<BasicCityModel> rushingCities = new ArrayList<BasicCityModel>();
+	List<BasicCityModel> canAttackDirectly = new ArrayList<BasicCityModel>();
 
 
 	boolean isRushing = false;
 	int rushWaveRemains;
-	BasicCity rushCity;
+	BasicCityModel rushCity;
 	int tickReact;
 
 	//---------------------------------------------- Properties ----------------------------------------------
 
 	//---------------------------------------------- Ctor ----------------------------------------------
-	public RushBot(GameMap Map, List<BasicCity> cities, List<BasicUnit> Units, int botId ) {
+	public RushBot(GameMap Map, List<BasicCityModel> cities, List<BasicUnitModel> Units, int botId ) {
 		map = Map;
 		this.cities = cities;
 		this.units = Units;
@@ -81,7 +81,7 @@ public class RushBot extends BasicBot {
 
 	private void RecalcBotCities() {
 		this.botCities.clear();
-		for (BasicCity city : this.cities) {
+		for (BasicCityModel city : this.cities) {
 			if (city.playerId == playerId)
 				this.botCities.add(city);
 		}
@@ -89,7 +89,7 @@ public class RushBot extends BasicBot {
 
 	private void RecalcRushingCities() {
 		rushingCities.clear();
-		for (BasicUnit unit : units) {
+		for (BasicUnitModel unit : units) {
 			if (unit.playerId == playerId && !rushingCities.contains(unit.destination)) {
 				rushingCities.add(unit.destination);
 			}
@@ -98,10 +98,10 @@ public class RushBot extends BasicBot {
 
 	private void RecalcCanAttackDirectly() {
 		canAttackDirectly.clear();
-		for (BasicCity city : this.cities) {
+		for (BasicCityModel city : this.cities) {
 			if (!this.botCities.contains(city)) {
 				boolean directly = false;
-				for (BasicCity bc : this.botCities) {
+				for (BasicCityModel bc : this.botCities) {
 					boolean tmp = city.isShortestPath(city);
 					if (tmp) {
 						directly = true;
@@ -117,9 +117,9 @@ public class RushBot extends BasicBot {
 
 	private void RecalcOvercapedBotCities() {
 		this.overcapedBotCities.clear();
-		for (BasicCity bc : this.botCities) {
-			int currUnits = bc.currWarriors + Settings.bot_rushBot_Overcapacity_NearValue;
-			for (BasicUnit unit : this.units) {
+		for (BasicCityModel bc : this.botCities) {
+			int currUnits = (int) (bc.currWarriors + Settings.bot_rushBot_Overcapacity_NearValue);
+			for (BasicUnitModel unit : this.units) {
 				if (unit.playerId == this.playerId && unit.destination == bc && unit.TicksLeftToDestination() <= this.tickReact) {
 					currUnits += unit.warriorsCnt;
 				}
@@ -133,9 +133,9 @@ public class RushBot extends BasicBot {
 	private void RecalcBotCitiesUnderAttack() {
 		botCitiesUnderAttack.clear();
 		botCitiesUnderAttackUnits.clear();
-		for (BasicCity bc : this.botCities) {
+		for (BasicCityModel bc : this.botCities) {
 			boolean isUnderAttack = false;
-			for (BasicUnit unit : this.units) {
+			for (BasicUnitModel unit : this.units) {
 				if (unit.playerId != this.playerId && unit.destination == bc) {
 					isUnderAttack = true;
 					break;
@@ -143,9 +143,9 @@ public class RushBot extends BasicBot {
 			}
 
 			if (isUnderAttack) {
-				botCitiesUnderAttackUnits.add(new ArrayList<BasicUnit>());
+				botCitiesUnderAttackUnits.add(new ArrayList<BasicUnitModel>());
 				botCitiesUnderAttack.add(bc);
-				for (BasicUnit unit : this.units) {
+				for (BasicUnitModel unit : this.units) {
 					if (unit.destination == bc) {
 						botCitiesUnderAttackUnits.get(botCitiesUnderAttackUnits.size() - 1).add(unit);
 					}
@@ -156,15 +156,15 @@ public class RushBot extends BasicBot {
 
 	//---------------------------------------------- Methods - behavior ----------------------------------------------
 	private void CalculateWhoNeedToBeRushed() {
-		List<List<BasicCity>> potentialRushes = new ArrayList<List<BasicCity>>();
+		List<List<BasicCityModel>> potentialRushes = new ArrayList<List<BasicCityModel>>();
 		for (int i = 1; i <= Settings.bot_rushBot_Rush_Cnt; i++) {
-			potentialRushes.add(new ArrayList<BasicCity>());
+			potentialRushes.add(new ArrayList<BasicCityModel>());
 
-			for (BasicCity city : canAttackDirectly) {
+			for (BasicCityModel city : canAttackDirectly) {
 				int potentialArmy = CalcPotentialArmy(i, city.defPersent);
 				if ( !rushingCities.contains(city) && (GetEnemyArmy(city)) < potentialArmy) {
 					boolean isInPrev = false;
-					for (List<BasicCity> rush : potentialRushes) {
+					for (List<BasicCityModel> rush : potentialRushes) {
 						if (rush.contains(city)) {
 							isInPrev = true;
 							break;
@@ -212,7 +212,7 @@ public class RushBot extends BasicBot {
 				}
 			}
 
-			List<BasicCity> potentialRush = potentialRushes.get(potentialRushPos);
+			List<BasicCityModel> potentialRush = potentialRushes.get(potentialRushPos);
 			rushCity = potentialRush.get(Settings.rnd.nextInt(0, potentialRush.size()));
 			isRushing = true;
 			rushWaveRemains = (byte)(potentialRushPos + 1);
@@ -228,7 +228,7 @@ public class RushBot extends BasicBot {
 			isRushing = false;
 		}
 		else {
-			for (BasicCity sity : this.botCities) {
+			for (BasicCityModel sity : this.botCities) {
 				map.SendWarriors(sity, rushCity);
 			}
 		}
@@ -254,7 +254,7 @@ public class RushBot extends BasicBot {
 	}
 
 	private void DropOvercapacityUnits() {
-		for (BasicCity i : this.overcapedBotCities) {
+		for (BasicCityModel i : this.overcapedBotCities) {
 			map.SendWarriors(i, this.cities.get(Settings.rnd.nextInt(0, this.cities.size())));
 		}
 	}
@@ -264,10 +264,9 @@ public class RushBot extends BasicBot {
 	}
 
 	//---------------------------------------------- Methods - Support  ----------------------------------------------
-
 	private int CalcPotentialArmy(int rushesCntBase, double defPersent) {
 		int potentialArmy = 0;
-		for (BasicCity city : this.botCities) {
+		for (BasicCityModel city : this.botCities) {
 			int currSend = 0, rushesCnt = rushesCntBase;
 			while (rushesCnt-- != 0) {
 				currSend += (int)((city.currWarriors - currSend) * city.sendPersent);
@@ -278,16 +277,16 @@ public class RushBot extends BasicBot {
 		return potentialArmy;
 	}
 
-	private int GetAvgDistance(BasicCity sity) {
+	private int GetAvgDistance(BasicCityModel sity) {
 		double avg = 0;
-		for (BasicCity bc : this.botCities) {
+		for (BasicCityModel bc : this.botCities) {
 			avg += bc.GetShortestPath(sity);
 		}
 		avg /= this.botCities.size();
 		return (int)Math.round(avg);
 	}
 
-	private double GetEnemyArmy(BasicCity sityTo) {
+	private double GetEnemyArmy(BasicCityModel sityTo) {
 		if (sityTo.playerId == 0)
 			return sityTo.currWarriors + Settings.bot_rushBot_Rush_MinimumMore;
 		else

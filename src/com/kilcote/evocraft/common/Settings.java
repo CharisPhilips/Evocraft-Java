@@ -17,10 +17,6 @@ public class Settings {
 	public static final double  MIN_WINDOW_WIDTH          = 1200;
 	public static final double  MIN_WINDOW_HEIGHT         = 400;
 
-	public static final String  LIST_FILE                 = "_list.txt";
-	//	public static final String  PATH_LIST_FILE            = "resources/shapes/" + LIST_FILE;
-	//	public static final String  SHAPES_FOLDER             = "resources/shapes";
-
 	/* Default Settings */
 	public static MyRandom rnd = new MyRandom();
 
@@ -31,13 +27,14 @@ public class Settings {
 
 	//view
 	public static int style_Num = 1;//1
+	public static boolean view_grid_show = false;
 
 	public static long seed = System.currentTimeMillis();
 
 	public static int fieldSizeX = 10;
 	public static int fieldSizeY = 10;
 
-	public static int milisecondsPerTick = 10;
+	public static int milisecondsPerTick = 1;
 
 	public static boolean gameplay_SaveWarriorsOverCap = true;
 	public static boolean gameplay_EqualsMeansCapture = true;
@@ -88,10 +85,9 @@ public class Settings {
 	public static double unitSizeMult = 0.40;
 
 	public static double roadWidth = 0.2;
-	public static double roadHeight = 0.2;
+	public static double roadHeight = 0.3;
 
 	public static double cityPassiveStrokeThickness = 1;
-	public static byte growIncr = 5;
 
 	//color
 	public static Color roadBackground = Color.valueOf("#ffffff33");
@@ -99,7 +95,7 @@ public class Settings {
 	public static double roadStrokeThickness = 0.3;
 
 	public static Color neutralTownFill = Color.WHEAT;
-	public static Paint neutralTownStroke = Paint.valueOf(Color.BLACK.toString());
+	public static Paint neutralTownStroke = Paint.valueOf(Color.WHITE.toString());
 
 	public static Color playerTownFill = Color.RED;
 	public static Paint playerTownStroke = Paint.valueOf(Color.BLACK.toString());
@@ -110,18 +106,17 @@ public class Settings {
 	public static List<Color> TownFills= new ArrayList<Color>(
 			Arrays.asList(
 					Color.BLUE,
-					Color.TEAL,
 					Color.GREEN,
 					Color.YELLOW,
 					Color.ORANGE,
 					Color.PINK,
 					Color.PURPLE,
 					Color.GRAY,
+					Color.TEAL,
 					Color.LIGHTBLUE,
 					Color.DARKGREEN,
 					Color.BROWN,
 					Color.MAROON,
-					Color.NAVY,
 					Color.NAVY,
 					Color.TURQUOISE,
 					Color.VIOLET,
@@ -138,6 +133,28 @@ public class Settings {
 
 	public static List<Color> TownStrokes= new ArrayList<Color>(
 			Arrays.asList(
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
+					Color.BLACK,
 					Color.BLACK
 					)
 			);

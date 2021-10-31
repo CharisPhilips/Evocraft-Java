@@ -1,161 +1,91 @@
-//package com.kilcote.evocraft.views.game.unit;
-//
-//import java.util.List;
-//
-//import com.kilcote.evocraft.common.Settings;
-//import com.kilcote.evocraft.engine.city.BasicCity;
-//import com.kilcote.evocraft.engine.interfaces.Settingable;
-//import com.kilcote.evocraft.engine.interfaces.Tickable;
-//import com.kilcote.evocraft.engine.map.GameMap;
-//import com.kilcote.evocraft.engine.setting._base.SettinsSetter;
-//import com.kilcote.evocraft.engine.unit.BasicUnit;
-//import com.kilcote.evocraft.views.game._base.GameCellUIObj;
-//
-//import javafx.scene.control.Label;
-//import javafx.scene.layout.Pane;
-//import javafx.scene.shape.Rectangle;
-//import javafx.scene.shape.Shape;
-//import javafx.util.Pair;
-//
-//public class BasicUnitUI extends GameCellUIObj { 
-////	//---------------------------------------------- Fields ----------------------------------------------
-////	protected List<Pair<Integer, Integer>> path;
-////	protected int currPathIndex;
-////	protected int currTickOnCell;
-////
-////	public int warriorsCnt;
-////	public int tickPerTurn;
-////	public BasicCity destination;
-////
-////	//---------------------------------------------- Properties ----------------------------------------------
-////	public int playerId;
-////	public GameMap gameMap;
-//	private BasicUnit model;
-//	//---------------------------------------------- Ctor ----------------------------------------------
-//	public BasicUnitUI(int warriorsCnt, int PlayerId, List<Pair<Integer, Integer>> Path, BasicCity destination, GameMap gameMap) {
-//		this.warriorsCnt = warriorsCnt;
-//		this.playerId = PlayerId;
-//		this.path = Path;
-//		this.destination = destination;
-//
-//		currTickOnCell = 1;
-//		currPathIndex = 0;
-//		this.gameMap = gameMap;
-//		this.gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].units.add(this);
-//	}
-//
-//	//---------------------------------------------- Methods ----------------------------------------------
-//	public boolean TickReact() {
-//		currTickOnCell++;
-//		if(currTickOnCell >= tickPerTurn) {
-//			currTickOnCell = 1;
-//			gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].units.remove(this);
-//			currPathIndex++;
-//			gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].units.add(this);
-//
-//			if( (gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city != null &&
-//					gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city.playerId != this.playerId) ||
-//					(currPathIndex == path.size() - 1)
-//					) {
-//				gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].units.remove(this);
-//				gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city.GetUnits(this);
-//				canvas.getChildren().remove(shape);
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
-//
-//	public int TicksLeftToDestination() {
-//		return (int)((path.size() - 1 - currPathIndex) * tickPerTurn - currTickOnCell);
-//	}
-//
-//	public void GetSettings(SettinsSetter settinsSetter) throws Exception {
-//		settinsSetter.SetSettings(this);
-//	}
-//
-//	///////////////////////////view///////////////////////////////
-//
-//	protected Label text;
-//	protected Shape rectangle;
-//	Pane canvas;
-//	double pixelPerTurnX, pixelPerTurnY;
-//	double shiftX, shiftY;
-//	
-//	protected Label selection;
-//	
-//	public void SetCanvas(Pane c) {
-//		canvas = c;
-//	}
-//	
-//	@Override
-//	public void InitializeDraw() {
-//		shape = new Pane();
-//		FillShape();
-//		canvas.getChildren().add(shape);
-//	}
-//
-//	@Override
-//	public void InvalidateDraw() {
-//		text.setText(String.valueOf(this.warriorsCnt));
-//
-//		pixelPerTurnX = this.shape.getWidth() / tickPerTurn;
-//		pixelPerTurnY = this.shape.getHeight() / tickPerTurn;
-//		
-//		SetShapeProperties();
-//		if(path.get(currPathIndex).getKey() > path.get(currPathIndex + 1).getKey()) {
-//			shape.setTranslateX(path.get(currPathIndex).getKey() * this.shape.getWidth() - currTickOnCell * pixelPerTurnX + shiftX);
-//		} else if (path.get(currPathIndex).getKey() < path.get(currPathIndex + 1).getKey()) {
-//			shape.setTranslateX(path.get(currPathIndex).getKey() * this.shape.getWidth() + currTickOnCell * pixelPerTurnX + shiftX);
-//		} else {
-//			shape.setTranslateX(path.get(currPathIndex).getKey() * this.shape.getWidth() + shiftX);
-//		}
-//
-//		if (path.get(currPathIndex).getValue() > path.get(currPathIndex + 1).getValue()) {
-//			shape.setTranslateY(path.get(currPathIndex).getValue() * this.shape.getHeight() - currTickOnCell * pixelPerTurnY + shiftY);
-//		} else if (path.get(currPathIndex).getValue() < path.get(currPathIndex + 1).getValue()) {
-//			shape.setTranslateY(path.get(currPathIndex).getValue() * this.shape.getHeight() + currTickOnCell * pixelPerTurnY + shiftY);
-//		} else {
-//			shape.setTranslateY(path.get(currPathIndex).getValue() * this.shape.getHeight() + shiftY);
-//		}
-//	}
-//	
-//	protected void FillShape() {
-//		RecalcGeometrySize();
-//		this.rectangle = new Rectangle(20, 20);
-//		
-//		this.rectangle.setFill(Settings.TownFills.get(playerId - 1));
-//		this.rectangle.setStroke(Settings.neutralTownStroke);
-//		
-//		SetElipseColor(rectangle, this.playerId);
-//		shape.getChildren().add(rectangle);
-//
-//		text = new Label();
-//		shape.getChildren().add(text);
-//		InvalidateDraw();
-//		
-//		shape.setTranslateX(path.get(currPathIndex).getKey() * this.shape.getWidth());
-//		shape.setTranslateY(path.get(currPathIndex).getValue() * this.shape.getHeight());
-//	}
-//
-//	public void SetShapeProperties() {
-//		if (this.shape.getWidth() == 0 && this.shape.getHeight() == 0) {
-//			rectangle.setVisible(false);
-//			text.setVisible(false);
-//		} else {
-//			rectangle.setVisible(true);
-//			text.setVisible(true);
-//			rectangle.setLayoutX(this.shape.getWidth() / 2 - (rectangle.getBoundsInLocal().getWidth() / 2));
-//			rectangle.setLayoutY(this.shape.getHeight() / 2 - (rectangle.getBoundsInLocal().getHeight() / 2));
-//			text.setLayoutX(this.shape.getWidth() / 2 - (text.getWidth() / 2));
-//			text.setLayoutY(this.shape.getHeight() / 2 - (text.getHeight() / 2));
-//		}
-//	}
-//	
-//	protected void RecalcGeometrySize() {
-//		pixelPerTurnX = Settings.oneCellSizeX / tickPerTurn;
-//		pixelPerTurnY = Settings.oneCellSizeY / tickPerTurn;
-//		shiftX = 0;
-//		shiftY = 0;
-//	}
-//}
+package com.kilcote.evocraft.views.game.unit;
+
+import com.kilcote.evocraft.common.Settings;
+import com.kilcote.evocraft.engine.unit.BasicUnitModel;
+import com.kilcote.evocraft.views.game._base.GameObjUI;
+
+import javafx.scene.control.Label;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
+public class BasicUnitUI extends GameObjUI<BasicUnitModel>  { 
+	//---------------------------------------------- Constructor ----------------------------------------------
+	public BasicUnitUI(BasicUnitModel model) {
+		setModel(model);
+		model.setUI(this);
+	}
+
+	///////////////////////////view///////////////////////////////
+
+	private Label text;
+	private Shape rectangle;
+	private double pixelPerTurnX, pixelPerTurnY;
+	private double shiftX, shiftY;
+	
+	protected Label selection;
+	
+	@Override
+	public void InvalidateDraw() {
+		if (shape == null) {
+			shape = new BasicUnitPane();
+			parent.getChildren().add(shape);
+			
+			RecalcGeometrySize();
+			this.rectangle = new Rectangle(20, 20);
+			
+			this.rectangle.setFill(Settings.TownFills.get(getModel().playerId - 1));
+			this.rectangle.setStroke(Settings.neutralTownStroke);
+			
+			SetElipseColor(rectangle, this.getModel().playerId);
+			shape.getChildren().add(rectangle);
+
+			text = new Label();
+			text.setTextFill(Settings.TownStrokes.get(getModel().playerId - 1));
+			shape.getChildren().add(text);
+			
+			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth());
+			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight());
+		}
+		text.setText(String.valueOf(this.getModel().warriorsCnt));
+		pixelPerTurnX = this.shape.getWidth() / getModel().tickPerTurn;
+		pixelPerTurnY = this.shape.getHeight() / getModel().tickPerTurn;
+		
+		SetShapeProperties();
+		if (getModel().path.get(getModel().currPathIndex).getKey() > getModel().path.get(getModel().currPathIndex + 1).getKey()) {
+			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() - getModel().currTickOnCell * pixelPerTurnX + shiftX);
+		} else if (getModel().path.get(getModel().currPathIndex).getKey() < getModel().path.get(getModel().currPathIndex + 1).getKey()) {
+			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() + getModel().currTickOnCell * pixelPerTurnX + shiftX);
+		} else {
+			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() + shiftX);
+		}
+
+		if (getModel().path.get(getModel().currPathIndex).getValue() > getModel().path.get(getModel().currPathIndex + 1).getValue()) {
+			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() - getModel().currTickOnCell * pixelPerTurnY + shiftY);
+		} else if (getModel().path.get(getModel().currPathIndex).getValue() < getModel().path.get(getModel().currPathIndex + 1).getValue()) {
+			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() + getModel().currTickOnCell * pixelPerTurnY + shiftY);
+		} else {
+			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() + shiftY);
+		}
+	}
+	
+	public void SetShapeProperties() {
+		if (this.shape.getWidth() == 0 && this.shape.getHeight() == 0) {
+			rectangle.setVisible(false);
+			text.setVisible(false);
+		} else {
+			rectangle.setVisible(true);
+			text.setVisible(true);
+			rectangle.setLayoutX(this.shape.getWidth() / 2 - (rectangle.getBoundsInLocal().getWidth() / 2));
+			rectangle.setLayoutY(this.shape.getHeight() / 2 - (rectangle.getBoundsInLocal().getHeight() / 2));
+			text.setLayoutX(this.shape.getWidth() / 2 - (text.getWidth() / 2));
+			text.setLayoutY(this.shape.getHeight() / 2 - (text.getHeight() / 2));
+		}
+	}
+	
+	protected void RecalcGeometrySize() {
+		pixelPerTurnX = Settings.oneCellSizeX / getModel().tickPerTurn;
+		pixelPerTurnY = Settings.oneCellSizeY / getModel().tickPerTurn;
+		shiftX = 0;
+		shiftY = 0;
+	}
+}

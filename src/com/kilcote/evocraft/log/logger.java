@@ -14,7 +14,7 @@ public class logger {
 	public static Logger logger = null;
 	public static FileHandler fh = null;
 	static {
-		if(Global.IS_LOG) {
+		if (Global.IS_LOG) {
 			logger = Logger.getLogger("Evocraft"); 
 			try {
 				fh = new FileHandler(System.getProperty("user.dir") + "/" + "log.txt");
@@ -42,31 +42,31 @@ public class logger {
 //	};
 	
 	public static void info(Class<?> clazz, String strMethod, String strLog) {
-		if(FILTER_CLASS!=null) {
+		if (FILTER_CLASS!=null) {
 			boolean isSearchFilter = false;
 			for(int i = 0; i < FILTER_CLASS.length; i++) {
-				if(clazz.getName().indexOf(FILTER_CLASS[i].getName())!=-1) {
+				if (clazz.getName().indexOf(FILTER_CLASS[i].getName())!=-1) {
 					isSearchFilter = true;
 					break;
 				}
 			}
-			if(!isSearchFilter ) {
+			if (!isSearchFilter ) {
 				return;
 			}
 		}
-		if(FILTER_METHOD!=null) {
+		if (FILTER_METHOD!=null) {
 			boolean isSearchFilter = false;
 			for(int i = 0; i < FILTER_METHOD.length; i++) {
-				if(strMethod.indexOf(FILTER_METHOD[i])!=-1) {
+				if (strMethod.indexOf(FILTER_METHOD[i])!=-1) {
 					isSearchFilter = true;
 					break;
 				}
 			}
-			if(!isSearchFilter ) {
+			if (!isSearchFilter ) {
 				return;
 			}
 		}
-		if(strLog.trim().length() <= 0) {
+		if (strLog.trim().length() <= 0) {
 			log(String.format("\t\t[%s() \r\n \t\t{%s class (%s)}]\r\n", strMethod, clazz.getSimpleName(), clazz.getName()), Level.FINE);
 			//log(String.format("\t\t[%s() method invoked at {%s class}]\r\n", strMethod, clazz.getName()), Level.FINE);
 		}
@@ -84,12 +84,12 @@ public class logger {
 		
 		StringBuffer buffer = new StringBuffer("");
 		try {
-			if(message!=null) {
+			if (message!=null) {
 				
-				if(message instanceof Throwable && ((Throwable)message).getStackTrace().length > 0) {
+				if (message instanceof Throwable && ((Throwable)message).getStackTrace().length > 0) {
 					
 					int nCount = ((Throwable)message).getStackTrace().length;
-					if(((Throwable)message).getCause()!=null) {
+					if (((Throwable)message).getCause()!=null) {
 						buffer.append(String.format("Error:%s, Cause:%s \r\n.", ((Throwable)message).getMessage(), ((Throwable)message).getCause().getMessage()));
 					}
 					else {
@@ -103,18 +103,18 @@ public class logger {
 								, ((Throwable)message).getStackTrace()[i].getMethodName()
 								, ((Throwable)message).getStackTrace()[i].getLineNumber()));
 					}
-					if(Global.IS_LOG) {
+					if (Global.IS_LOG) {
 						logger.log(level, buffer.toString());
 					}
-					if(Global.IS_DEBUG) {
+					if (Global.IS_DEBUG) {
 						((Throwable)message).printStackTrace();
 					}
 				}
-				else if(message instanceof String) {
-					if(Global.IS_LOG) {
+				else if (message instanceof String) {
+					if (Global.IS_LOG) {
 						logger.log(level, (String) message);
 					}
-					if(Global.IS_DEBUG) {
+					if (Global.IS_DEBUG) {
 						System.out.println((String) message);
 					}
 				}
@@ -126,7 +126,7 @@ public class logger {
 	}
 
 	public static void close() {
-		if(Global.IS_LOG) {
+		if (Global.IS_LOG) {
 			fh.close();
 		}
 	}

@@ -8,15 +8,16 @@ import com.kilcote.evocraft.common.Settings;
 import com.kilcote.evocraft.engine.map.GameMap;
 import com.kilcote.evocraft.engine.map.mapGenerators.city.BasicCityPlacer;
 import com.kilcote.evocraft.engine.map.mapGenerators.cityid.BasicCityId;
+import com.kilcote.evocraft.views.game.mapping.IFactoryUI;
 
 import javafx.util.Pair;
 
 public class TunnelMapGenerator implements BasicMapGenerator {
 
 	@Override
-	public GameMap GenerateRandomMap(int sizeX, int sizeY, BasicCityPlacer sityPlacer, BasicCityId basicCityId) {
+	public GameMap GenerateRandomMap(int sizeX, int sizeY, BasicCityPlacer sityPlacer, BasicCityId basicCityId, IFactoryUI uiGeneartor) {
 		
-		GameMap m = new GameMap(sizeX, sizeY);
+		GameMap m = new GameMap(sizeX, sizeY, uiGeneartor);
 		LaburintCell[][] map = new LaburintCell[sizeY][];
 		
 		for (int i = 0; i < sizeY; i++) {
@@ -56,7 +57,7 @@ public class TunnelMapGenerator implements BasicMapGenerator {
 	private boolean CellsLeftUnvisited(LaburintCell[][] map, int sizeX, int sizeY) {
 		for (int i = 0; i < sizeY; ++i) {
 			for (int j = 0; j < sizeX; ++j) {
-				if(!map[i][j].isVisited) {
+				if (!map[i][j].isVisited) {
 					return true;
 				}
 			}

@@ -6,7 +6,7 @@ import java.util.Random;
 
 import com.kilcote.evocraft.common.MyRandom;
 import com.kilcote.evocraft.common.Settings;
-import com.kilcote.evocraft.engine.city.BasicCity;
+import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.engine.map.GameMap;
 import com.kilcote.evocraft.engine.map.mapGenerators.cityid.BasicCityId;
 import com.kilcote.evocraft.engine.setting.CitySettings;
@@ -16,7 +16,7 @@ import javafx.util.Pair;
 public class SityPlacer14 implements BasicCityPlacer {
 
 	//---------------------------------------------- Fields ----------------------------------------------
-	List<BasicCity> cities = new ArrayList<BasicCity>(Settings.locateMemory_SizeForTowns);
+	List<BasicCityModel> cities = new ArrayList<BasicCityModel>(Settings.locateMemory_SizeForTowns);
 	List<Pair<Integer, Integer>> bestCitiesPos = new ArrayList<Pair<Integer, Integer>>();
 
 	//---------------------------------------------- Methods - main ----------------------------------------------
@@ -68,7 +68,7 @@ public class SityPlacer14 implements BasicCityPlacer {
 		citiesCnt = Settings.rnd.nextInt((Settings.generator_SityPlacer14_Quad_Cities_Min * gameQuads), (Settings.generator_SityPlacer14_Quad_Cities_Max * gameQuads));
 
 		for (int i = 0; i < citiesCnt; ++i){
-			BasicCity bs = new BasicCity(m);
+			BasicCityModel bs = new BasicCityModel(m);
 			try {
 				bs.GetSettings(new CitySettings());
 			} catch (Exception e) {
@@ -121,7 +121,7 @@ public class SityPlacer14 implements BasicCityPlacer {
 				while (pos2 == pos1);
 				tmp = cities.get(pos1);
 				cities.set(pos1, cities.get(pos2));
-				cities.set(pos2, (BasicCity)tmp);
+				cities.set(pos2, (BasicCityModel)tmp);
 			}
 		}
 	}
@@ -189,8 +189,8 @@ public class SityPlacer14 implements BasicCityPlacer {
 		return rez;
 	}
 
-	private List<BasicCity> GetCitiesOnMap(GameMap m) {
-		List<BasicCity> list = new ArrayList<BasicCity>();
+	private List<BasicCityModel> GetCitiesOnMap(GameMap m) {
+		List<BasicCityModel> list = new ArrayList<BasicCityModel>();
 		for (int i = 0; i < m.sizeY; i++) {
 			for (int j = 0; j < m.sizeX; ++j) {
 				if (m.map[i][j].city != null) {

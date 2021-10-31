@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.kilcote.evocraft.common.Settings;
 import com.kilcote.evocraft.engine.bot.RushBot;
-import com.kilcote.evocraft.engine.city.BasicCity;
+import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.engine.map.GameMap;
 import com.kilcote.evocraft.engine.map.mapGenerators.city.BasicCityPlacer;
 import com.kilcote.evocraft.engine.map.mapGenerators.city.SityPlacer14;
@@ -14,6 +14,8 @@ import com.kilcote.evocraft.engine.map.mapGenerators.cityid.CityIdDiffCorners;
 import com.kilcote.evocraft.engine.map.mapGenerators.road.BasicMapGenerator;
 import com.kilcote.evocraft.engine.map.mapGenerators.road.TunnelMapGenerator;
 import com.kilcote.evocraft.views.WindowFrame;
+import com.kilcote.evocraft.views.game.mapping.JavaUI;
+import com.kilcote.evocraft.views.game.mapping.IFactoryUI;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
@@ -35,6 +37,7 @@ public class Game extends AnimationTimer {
 
 	private Timeline timeline = null;
 	private Long lastUpdate = null;
+	private IFactoryUI mUIGeneartor = new JavaUI();
 
 	public Game(GridPane gamePage, int X, int Y) {
 		isPlay = true;
@@ -59,8 +62,42 @@ public class Game extends AnimationTimer {
 		Game.tick = 1;
 
 		CreateGameMap();
-		InitGameMap();
+		InitializeDraw();
 		this.start();
+	}
+
+	private void CreateGameMap() {
+
+		Settings.oneCellSizeX = 10;
+		Settings.oneCellSizeY = 10;
+
+		Settings.seed = (long)System.currentTimeMillis();
+
+		gameMap = GenerateRandomMap(
+				x, y,
+				new TunnelMapGenerator(),
+				new SityPlacer14(),
+				new CityIdDiffCorners(),
+				mUIGeneartor
+				);
+
+		mUIGeneartor.generateGameMap(gameMap);
+		
+		for (int i = 0; i < Settings.generator_CityId_Bots; ++i) {
+			gameMap.SetBot(i, new RushBot(gameMap, gameMap.cities, gameMap.units, (byte)(i + 2)));
+		}
+	}
+
+	private void InitializeDraw() {
+		gameMap.getUI().setParent(mainGrid);
+		gameMap.getUI().Initialize();
+	}
+
+	private void Loop() {
+		this.tick++;
+		gameMap.getUI().InvalidateDraw();
+		gameMap.Tick();
+		WinProcess();
 	}
 
 	private void FillIOWindow() {
@@ -75,38 +112,7 @@ public class Game extends AnimationTimer {
 			mainGrid.getRowConstraints().add(row);
 		}
 	}
-
-	private void CreateGameMap() {
-
-		Settings.oneCellSizeX = 10;
-		Settings.oneCellSizeY = 10;
-
-		Settings.seed = (long)System.currentTimeMillis();
-
-		gameMap = GenerateRandomMap(
-				x, y,
-				new TunnelMapGenerator(),
-				new SityPlacer14(),
-				new CityIdDiffCorners()
-				);
-
-		for (int i = 0; i < Settings.generator_CityId_Bots; ++i) {
-			gameMap.SetBot(i, new RushBot(gameMap, gameMap.cities, gameMap.units, (byte)(i + 2)));
-		}
-	}
-
-	private void InitGameMap() {
-		gameMap.SetCanvas(mainGrid);
-		gameMap.DrawStatic(mainGrid);
-	}
-
-	private void Loop() {
-		this.tick++;
-		gameMap.InvalidateDraw();
-		gameMap.Tick();
-		WinProcess();
-	}
-
+	
 	private void WinProcess() {
 		int id = 0;
 
@@ -141,13 +147,13 @@ public class Game extends AnimationTimer {
 	}
 
 	private boolean IsWin(int id) {
-		for (BasicCity city : gameMap.cities) {
+		for (BasicCityModel city : gameMap.cities) {
 			if (city.playerId != 0) {
 				id = city.playerId;
 				break;
 			}
 		}
-		for (BasicCity city : gameMap.cities) {
+		for (BasicCityModel city : gameMap.cities) {
 			if (city.playerId != 0 && city.playerId != id) {
 				return false;
 			}
@@ -156,8 +162,8 @@ public class Game extends AnimationTimer {
 	}
 
 	//----------------------------------------------Static Methods ----------------------------------------------
-	public static GameMap GenerateRandomMap(int SizeX, int SizeY, BasicMapGenerator mapGenerator, BasicCityPlacer sityPlacer, BasicCityId basicCityId) {
-		return mapGenerator.GenerateRandomMap(SizeX, SizeY, sityPlacer, basicCityId);
+	public static GameMap GenerateRandomMap(int SizeX, int SizeY, BasicMapGenerator mapGenerator, BasicCityPlacer sityPlacer, BasicCityId basicCityId, IFactoryUI uiGeneartor) {
+		return mapGenerator.GenerateRandomMap(SizeX, SizeY, sityPlacer, basicCityId, uiGeneartor);
 	}
 	
 }

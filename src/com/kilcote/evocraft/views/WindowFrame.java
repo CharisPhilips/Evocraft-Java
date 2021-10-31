@@ -425,8 +425,8 @@ public class WindowFrame extends BorderPane {
 		StringBuilder sb = new StringBuilder();
 		int count = 0;
 		for( KeyCode keyCode: KeyCode.values()) {
-			if( keyboardBitSet.get(keyCode.ordinal())) {
-				if( count > 0) {
+			if ( keyboardBitSet.get(keyCode.ordinal())) {
+				if ( count > 0) {
 					sb.append( " ");
 				}
 				sb.append(keyCode.toString());
@@ -438,7 +438,7 @@ public class WindowFrame extends BorderPane {
 
 		ArrayList<KeyCode> keyEvent = new ArrayList<KeyCode>();
 		for(KeyCode keyCode: KeyCode.values()) {
-			if(keyboardBitSet.get(keyCode.ordinal())) {
+			if (keyboardBitSet.get(keyCode.ordinal())) {
 				keyEvent.add(keyCode);
 			}
 		}
@@ -463,71 +463,71 @@ public class WindowFrame extends BorderPane {
 		//		KeyCode alignmentCenterLeftEventKeyCodes[] = {KeyCode.NUMPAD4};
 		//		KeyCode alignmentCenterEventKeyCodes[] = {KeyCode.NUMPAD5};
 
-		//		if(Global.isMatchKeyEvent(keyEvent, selectAllEventKeyCodes)) {
+		//		if (Global.isMatchKeyEvent(keyEvent, selectAllEventKeyCodes)) {
 		//			//Ctrl + A
 		//			Global.SelectAll();
 		//		}
-		//		if(Global.isMatchKeyEvent(keyEvent, copyEventKeyCodes)) {
+		//		if (Global.isMatchKeyEvent(keyEvent, copyEventKeyCodes)) {
 		//			//Ctrl + C
 		//			Global.CopyToClipBoards();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, cutEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, cutEventKeyCodes)) {
 		//			//Ctrl + X
 		//			Global.CutToClipboard();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, pasteEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, pasteEventKeyCodes)) {
 		//			//Ctrl + V
 		//			Global.PasteFromClipboard(null);
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, deleteEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, deleteEventKeyCodes)) {
 		//			//Delete
 		//			Global.DeleteSelected();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, boldEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, boldEventKeyCodes)) {
 		//			//Ctrl + B
 		//			Global.boldText();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, italicEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, italicEventKeyCodes)) {
 		//			//Ctrl + I
 		//			Global.italicText();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, underlineEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, underlineEventKeyCodes)) {
 		//			//Ctrl + U
 		//			Global.underlineText();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentTopLeftEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentTopLeftEventKeyCodes)) {
 		//			//NUMPAD7
 		//			Global.alignTextTopLeft();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentTopCenterEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentTopCenterEventKeyCodes)) {
 		//			//NUMPAD8
 		//			Global.alignTextTopCenter();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentTopRightEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentTopRightEventKeyCodes)) {
 		//			//NUMPAD9
 		//			Global.alignTextTopRight();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentCenterRightEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentCenterRightEventKeyCodes)) {
 		//			//NUMPAD6
 		//			Global.alignTextCenterRight();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentBottomRightEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentBottomRightEventKeyCodes)) {
 		//			//NUMPAD3
 		//			Global.alignTextBottomRight();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentBottomCenterEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentBottomCenterEventKeyCodes)) {
 		//			//NUMPAD2
 		//			Global.alignTextBottomCenter();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentBottomLeftEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentBottomLeftEventKeyCodes)) {
 		//			//NUMPAD1
 		//			Global.alignTextBottomLeft();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentCenterLeftEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentCenterLeftEventKeyCodes)) {
 		//			//NUMPAD4
 		//			Global.alignTextCenterLeft();
 		//		}
-		//		else if(Global.isMatchKeyEvent(keyEvent, alignmentCenterEventKeyCodes)) {
+		//		else if (Global.isMatchKeyEvent(keyEvent, alignmentCenterEventKeyCodes)) {
 		//			//NUMPAD5
 		//			Global.alignTextCenter();
 		//		}

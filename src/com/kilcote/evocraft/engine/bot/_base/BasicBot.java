@@ -2,15 +2,15 @@ package com.kilcote.evocraft.engine.bot._base;
 
 import java.util.List;
 
-import com.kilcote.evocraft.engine.city.BasicCity;
+import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.engine.map.GameMap;
-import com.kilcote.evocraft.engine.unit.BasicUnit;
+import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 
 public abstract class BasicBot {
 	//---------------------------------------------- Fields ----------------------------------------------
 	protected GameMap map;
-	protected List<BasicCity> cities;
-	protected List<BasicUnit> units;
+	protected List<BasicCityModel> cities;
+	protected List<BasicUnitModel> units;
 
 	//---------------------------------------------- Properties ----------------------------------------------
 	public int playerId;
