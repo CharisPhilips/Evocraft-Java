@@ -49,10 +49,13 @@ public class BasicUnitModel extends GameObjModel<BasicUnitUI> implements Tickabl
 			currPathIndex++;
 			gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].units.add(this);
 
-			if ( (gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city != null &&
-					gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city.playerId != this.playerId) ||
-					(currPathIndex == path.size() - 1)
-					) {
+			if (
+				(
+					gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city != null &&
+					gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city.playerId != this.playerId
+				)
+				|| (currPathIndex == path.size() - 1)
+			) {
 				gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].units.remove(this);
 				gameMap.map[path.get(currPathIndex).getValue()][path.get(currPathIndex).getKey()].city.GetUnits(this);
 				return true;

@@ -104,7 +104,7 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 				}
 			});
 		}
-		label.setText(String.valueOf(getModel().currWarriors) + '/' + String.valueOf(getModel().maxWarriors));
+		label.setText(String.valueOf((int)Math.ceil(getModel().currWarriors)) + '/' + String.valueOf(getModel().maxWarriors));
 		label.relocate(this.shape.getWidth() * 1 / 8, this.shape.getHeight() * 1 / 8);
 		if (this.cityModel != null && cityModel instanceof Circle) {
 			((Circle)this.cityModel).setCenterX(this.shape.getWidth() / 2);
@@ -129,25 +129,17 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 			image.setVisible(true);
 			if (getModel().playerId == 1) {
 				image.setImage(ResourceUtils.getResourceImage("cities/city_p1_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
-				image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
 			} else if (getModel().playerId == 2) {
 				image.setImage(ResourceUtils.getResourceImage("cities/city_p2_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
-				image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
-			} else if (getModel().playerId == 4) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p3_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
-				image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
 			} else if (getModel().playerId == 3) {
+				image.setImage(ResourceUtils.getResourceImage("cities/city_p3_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+			} else if (getModel().playerId == 4) {
 				image.setImage(ResourceUtils.getResourceImage("cities/city_p4_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
-				image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
 			} else {
 				image.setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
-				image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
 			}
+			image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
+			image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
 		}
 	}
 	

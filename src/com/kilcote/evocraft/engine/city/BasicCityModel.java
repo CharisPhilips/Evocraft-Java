@@ -95,7 +95,7 @@ public class BasicCityModel extends GameObjModel<BasicCityUI> implements Tickabl
 			} else if (!Settings.gameplay_EqualsMeansCapture && this.currWarriors == unit.warriorsCnt) {
 				currWarriors = 0;
 			} else {
-				currWarriors = (int)(unit.warriorsCnt - this.currWarriors);
+				currWarriors = (int)(unit.warriorsCnt - (this.currWarriors * this.defPersent));
 				playerId = unit.playerId;
 			}
 		}

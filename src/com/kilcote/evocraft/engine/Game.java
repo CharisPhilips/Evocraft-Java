@@ -14,11 +14,10 @@ import com.kilcote.evocraft.engine.map.mapGenerators.cityid.CityIdDiffCorners;
 import com.kilcote.evocraft.engine.map.mapGenerators.road.BasicMapGenerator;
 import com.kilcote.evocraft.engine.map.mapGenerators.road.TunnelMapGenerator;
 import com.kilcote.evocraft.views.WindowFrame;
-import com.kilcote.evocraft.views.game.mapping.JavaUI;
 import com.kilcote.evocraft.views.game.mapping.IFactoryUI;
+import com.kilcote.evocraft.views.game.mapping.JavaUI;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -28,20 +27,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
 public class Game extends AnimationTimer {
-	public static long tick = 1;
 
 	private GameMap gameMap;
 	private GridPane mainGrid;
-	private boolean isPlay, isNeedToExit;
 	private int x, y;
+	public static long tick = 1;
 
-	private Timeline timeline = null;
 	private Long lastUpdate = null;
 	private IFactoryUI mUIGeneartor = new JavaUI();
+	private String winner = null;
 
 	public Game(GridPane gamePage, int X, int Y) {
-		isPlay = true;
-		isNeedToExit = false;
 		mainGrid = gamePage;
 		this.x = X;
 		this.y = Y;
@@ -58,9 +54,7 @@ public class Game extends AnimationTimer {
 	}
 
 	public void Play() {
-		isPlay = true;
-		Game.tick = 1;
-
+		tick = 1;
 		CreateGameMap();
 		InitializeDraw();
 		this.start();
@@ -88,13 +82,17 @@ public class Game extends AnimationTimer {
 		}
 	}
 
+	public GameMap GenerateRandomMap(int SizeX, int SizeY, BasicMapGenerator mapGenerator, BasicCityPlacer sityPlacer, BasicCityId basicCityId, IFactoryUI uiGeneartor) {
+		return mapGenerator.GenerateRandomMap(SizeX, SizeY, sityPlacer, basicCityId, uiGeneartor);
+	}
+
 	private void InitializeDraw() {
 		gameMap.getUI().setParent(mainGrid);
 		gameMap.getUI().Initialize();
 	}
 
 	private void Loop() {
-		this.tick++;
+		tick++;
 		gameMap.getUI().InvalidateDraw();
 		gameMap.Tick();
 		WinProcess();
@@ -115,13 +113,9 @@ public class Game extends AnimationTimer {
 	
 	private void WinProcess() {
 		int id = 0;
-
 		if (IsWin(id)) {
 			this.stop();
 			mainGrid.getChildren().clear();
-			isPlay = false;
-
-			String winner = "";
 			if (id == 1) {
 				winner = "You win!";
 			} else {
@@ -133,7 +127,7 @@ public class Game extends AnimationTimer {
 					Alert alert = new Alert(AlertType.CONFIRMATION);
 					alert.setTitle("Info");
 					alert.setHeaderText("Do you want to play again?");
-					alert.setContentText("Winner: winner");
+					alert.setContentText("Winner: " + winner);
 					
 					Optional<ButtonType> result = alert.showAndWait();
 					if (result.get() == ButtonType.OK){
@@ -161,9 +155,4 @@ public class Game extends AnimationTimer {
 		return true;
 	}
 
-	//----------------------------------------------Static Methods ----------------------------------------------
-	public static GameMap GenerateRandomMap(int SizeX, int SizeY, BasicMapGenerator mapGenerator, BasicCityPlacer sityPlacer, BasicCityId basicCityId, IFactoryUI uiGeneartor) {
-		return mapGenerator.GenerateRandomMap(SizeX, SizeY, sityPlacer, basicCityId, uiGeneartor);
-	}
-	
 }
