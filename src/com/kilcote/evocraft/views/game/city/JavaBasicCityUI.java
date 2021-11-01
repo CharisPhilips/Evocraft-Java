@@ -1,8 +1,9 @@
  package com.kilcote.evocraft.views.game.city;
 
-import com.kilcote.evocraft.common.Settings;
-import com.kilcote.evocraft.engine.cell.GameCellModel;
+import com.kilcote.evocraft.common.StandaloneSettings;
+import com.kilcote.evocraft.engine.cell.JavaGameCellModel;
 import com.kilcote.evocraft.engine.city.BasicCityModel;
+import com.kilcote.evocraft.engine.city.JavaBasicCityModel;
 import com.kilcote.evocraft.utils.ResourceUtils;
 import com.kilcote.evocraft.views.game.JavaClient;
 import com.kilcote.evocraft.views.game._base.GameObjCellUI;
@@ -21,9 +22,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
-public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
+public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 
-	public BasicCityUI(BasicCityModel model) {
+	public JavaBasicCityUI(JavaBasicCityModel model) {
 		setModel(model);
 		model.setUI(this);
 	}
@@ -38,12 +39,12 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 	@Override
 	public void InvalidateDraw() {
 		if (shape == null) {
-			shape = new BasicCityPane();
+			shape = new JavaBasicCityPane();
 			//Elipse
 			label = new Label();
 			label.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(label.getHeight() / 2), Insets.EMPTY)));
 			label.setTextFill(Color.web("#ffffff"));
-			switch (Settings.style_Num) {
+			switch (StandaloneSettings.style_Num) {
 			case 0:
 				cityModel = new Circle(this.shape.getWidth() / 2 , this.shape.getHeight() / 2, 40);
 				SetUiColor((Shape)cityModel, this.getModel().playerId);
@@ -54,7 +55,6 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 				break;
 			}
 			ivSelection = ResourceUtils.getResourceImageView("war/our_selector.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true);
-			SetSelectionImgProperties();
 			shape.getChildren().add(cityModel);
 			shape.getChildren().add(label);
 			shape.getChildren().add(ivSelection);
@@ -66,12 +66,12 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 						
 						if (event.getButton() == MouseButton.PRIMARY) {
 							if (event.getClickCount() == 2) {
-								if (BasicCityUI.this.getModel().playerId == 1) {
-									getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
+								if (JavaBasicCityUI.this.getModel().playerId == 1) {
+									getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, JavaBasicCityUI.this.getModel());
 									for(BasicCityModel x : JavaClient.g_selectedCities) {
-										switch (Settings.style_Num) {
+										switch (StandaloneSettings.style_Num) {
 										case 0:
-											SetUiColor((Shape)cityModel, BasicCityUI.this.getModel().playerId);
+											SetUiColor((Shape)cityModel, JavaBasicCityUI.this.getModel().playerId);
 											break;
 										case 1:
 											SetCityImgProperties();
@@ -81,16 +81,16 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 									JavaClient.clearSelectCities();
 								}
 							} else {
-								if (BasicCityUI.this.getModel().playerId == 1) {
+								if (JavaBasicCityUI.this.getModel().playerId == 1) {
 									if (!JavaClient.g_selectedCities.contains(this)) {
-										JavaClient.selectCity(BasicCityUI.this.getModel());
+										JavaClient.selectCity(JavaBasicCityUI.this.getModel());
 									}
-								} else if (BasicCityUI.this.getModel().playerId != 1) {
-									getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
+								} else if (JavaBasicCityUI.this.getModel().playerId != 1) {
+									getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, JavaBasicCityUI.this.getModel());
 									for(BasicCityModel x : JavaClient.g_selectedCities) {
-										switch (Settings.style_Num) {
+										switch (StandaloneSettings.style_Num) {
 										case 0:
-											SetUiColor((Shape) BasicCityUI.this.cityModel, BasicCityUI.this.getModel().playerId);
+											SetUiColor((Shape) JavaBasicCityUI.this.cityModel, JavaBasicCityUI.this.getModel().playerId);
 											break;
 										case 1:
 											SetCityImgProperties();
@@ -101,7 +101,7 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 								}
 							}
 						} else {
-							JavaClient.deselectCity(BasicCityUI.this.getModel());
+							JavaClient.deselectCity(JavaBasicCityUI.this.getModel());
 						}
 					}
 				}
@@ -179,7 +179,7 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 		public boolean isOpenTop = false;
 		public int num = -1;
 
-		public PathFinderCell(GameCellModel cell) {
+		public PathFinderCell(JavaGameCellModel cell) {
 			this.isOpenBottom = cell.isOpenBottom;
 			this.isOpenLeft = cell.isOpenLeft;
 			this.isOpenRight = cell.isOpenRight;

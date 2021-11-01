@@ -1,8 +1,8 @@
 package com.kilcote.evocraft.views;
 
 import com.kilcote.evocraft.common.Global;
-import com.kilcote.evocraft.common.Settings;
-import com.kilcote.evocraft.engine.Game;
+import com.kilcote.evocraft.common.StandaloneSettings;
+import com.kilcote.evocraft.engine.JavaGameEngine;
 import com.kilcote.evocraft.utils.ResourceUtils;
 import com.kilcote.evocraft.views.components.MultilineTooltip;
 import com.kilcote.evocraft.views.components.ToolBarSpacer;
@@ -30,10 +30,10 @@ import javafx.scene.text.FontWeight;
 public class EvoCraftPane extends BorderPane {
 
 	/* Window Title*/
-	private final Label _windowTitleLabel = new Label(Settings.WINDOW_TITLE);
+	private final Label _windowTitleLabel = new Label(StandaloneSettings.WINDOW_TITLE);
 
 	/* Window Icon*/
-	private final ImageView _appIcon = ResourceUtils.getResourceImageView(Settings.APP_ICON, 22, 22, true, true);
+	private final ImageView _appIcon = ResourceUtils.getResourceImageView(StandaloneSettings.APP_ICON, 22, 22, true, true);
 
 	//Window icons
 	private final IconToggleButton _exitIconButton = new IconToggleButton(null, "exit.png", new String[]{"Exit"});
@@ -63,7 +63,7 @@ public class EvoCraftPane extends BorderPane {
 //	public final GamePage gamePage = new GamePage(this.MiddleLayout);
 //	public final GridPane gamePage = new GridPane();
 
-	private Game game = null; 
+	private JavaGameEngine game = null; 
 			
 	public EvoCraftPane() {
 		this._initializeData();
@@ -80,7 +80,7 @@ public class EvoCraftPane extends BorderPane {
 
 		this._windowTitleLabel.setTextFill(Color.web("#34495e"));
 		this._windowTitleLabel.setFont(Font.font("System", FontWeight.BOLD, 14));
-		this._windowTitleLabel.setTooltip(new MultilineTooltip(new String[]{"Version " + Settings.VERSION}));
+		this._windowTitleLabel.setTooltip(new MultilineTooltip(new String[]{"Version " + StandaloneSettings.VERSION}));
 		this._exitIconButton.setStyle("-fx-background-radius: " + ToolbarGroup.CORNER_RADIUS + "; -fx-padding: 4;");
 
 		this._maximizeIconButton.setStyle("-fx-background-radius: " + ToolbarGroup.CORNER_RADIUS + "; -fx-padding: 4;");
@@ -173,7 +173,7 @@ public class EvoCraftPane extends BorderPane {
             @Override
             public void handle(ActionEvent event) {
             	if (game == null) {
-            		game = new Game(GameLayout, Settings.fieldSizeX, Settings.fieldSizeY);
+            		game = new JavaGameEngine(GameLayout, StandaloneSettings.fieldSizeX, StandaloneSettings.fieldSizeY);
             		game.Play();
             	} else {
             		game.Resume();

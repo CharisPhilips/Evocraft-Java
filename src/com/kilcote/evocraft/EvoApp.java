@@ -1,7 +1,7 @@
 package com.kilcote.evocraft;
 
 import com.kilcote.evocraft.common.Global;
-import com.kilcote.evocraft.common.Settings;
+import com.kilcote.evocraft.common.StandaloneSettings;
 import com.kilcote.evocraft.log.logger;
 import com.kilcote.evocraft.views.EvoCraftPane;
 import com.kilcote.evocraft.views.WindowFrame;
@@ -30,10 +30,10 @@ public class EvoApp extends Application {
 	    		WindowFrame     window  = new WindowFrame(program);
 	    		logger.info(this.getClass(), "start", "Start WindowFrame");
 	    		
-	    		Scene           scene   = new Scene(window, Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT);
+	    		Scene           scene   = new Scene(window, StandaloneSettings.WINDOW_WIDTH, StandaloneSettings.WINDOW_HEIGHT);
 	    		logger.info(this.getClass(), "start", "Start Scene");
 	    		
-	    		primaryStage.setTitle(Settings.WINDOW_TITLE);
+	    		primaryStage.setTitle(StandaloneSettings.WINDOW_TITLE);
 	    		logger.info(this.getClass(), "start", "primaryStage.setTitle");
 	    		
 	    		primaryStage.setScene(scene);

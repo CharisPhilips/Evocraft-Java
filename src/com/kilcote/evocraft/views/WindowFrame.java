@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 
 import com.kilcote.evocraft.common.Global;
-import com.kilcote.evocraft.common.Settings;
+import com.kilcote.evocraft.common.StandaloneSettings;
 import com.kilcote.evocraft.views.components.IconMenuItem;
 
 import javafx.beans.value.ChangeListener;
@@ -47,28 +47,28 @@ public class WindowFrame extends BorderPane {
 
     /* Top */
     public        final Line         TopLeftEdge                     = new Line(0, 0, WINDOW_CORNER_LENGTH, 0);
-    public        final Line         TopEdge                         = new Line(0, 0, Settings.WINDOW_WIDTH - (WINDOW_CORNER_LENGTH * 3), 0);
+    public        final Line         TopEdge                         = new Line(0, 0, StandaloneSettings.WINDOW_WIDTH - (WINDOW_CORNER_LENGTH * 3), 0);
     public        final Line         TopRightEdge                    = new Line(0, 0, WINDOW_CORNER_LENGTH, 0);
 
     private             double       _topEdgePrevY                   = 0;
 
     /* Bottom */
     public        final Line         BottomLeftEdge                  = new Line(0, 0, WINDOW_CORNER_LENGTH, 0);
-    public        final Line         BottomEdge                      = new Line(0, 0, Settings.WINDOW_WIDTH - (WINDOW_CORNER_LENGTH * 3), 0);
+    public        final Line         BottomEdge                      = new Line(0, 0, StandaloneSettings.WINDOW_WIDTH - (WINDOW_CORNER_LENGTH * 3), 0);
     public        final Line         BottomRightEdge                 = new Line(0, 0, WINDOW_CORNER_LENGTH, 0);
 
     private             double       _bottomEdgePrevY                = 0;
 
     /* Rear Left */
     public        final Line         RearTopLeftEdge                 = new Line(0, 0, 0, WINDOW_CORNER_LENGTH);
-    public        final Line         RearLeftEdge                    = new Line(0, WINDOW_CORNER_LENGTH, 0, Settings.WINDOW_HEIGHT - (WINDOW_CORNER_LENGTH * 3));
+    public        final Line         RearLeftEdge                    = new Line(0, WINDOW_CORNER_LENGTH, 0, StandaloneSettings.WINDOW_HEIGHT - (WINDOW_CORNER_LENGTH * 3));
     public        final Line         RearBottomLeftEdge              = new Line(0, 0, 0, WINDOW_CORNER_LENGTH);
 
     private             double       _rearLeftEdgePrevX              = 0;
 
     /* Rear Right */
     public        final Line         RearTopRightEdge                = new Line(0, 0, 0, WINDOW_CORNER_LENGTH);
-    public        final Line         RearRightEdge                   = new Line(0, WINDOW_CORNER_LENGTH, 0, Settings.WINDOW_HEIGHT - (WINDOW_CORNER_LENGTH * 3));
+    public        final Line         RearRightEdge                   = new Line(0, WINDOW_CORNER_LENGTH, 0, StandaloneSettings.WINDOW_HEIGHT - (WINDOW_CORNER_LENGTH * 3));
     public        final Line         RearBottomRightEdge             = new Line(0, 0, 0, WINDOW_CORNER_LENGTH);
 
     private             double       _rearRightEdgePrevX             = 0;
@@ -546,13 +546,13 @@ public class WindowFrame extends BorderPane {
 	}
 
 	public void SetWidth(double windowWidth) {
-		if (windowWidth >= Settings.MIN_WINDOW_WIDTH) {
+		if (windowWidth >= StandaloneSettings.MIN_WINDOW_WIDTH) {
 			Global.PRIMARY_STAGE.setWidth(windowWidth);
 		}
 	}
 
 	public void SetHeight(double windowHeight) {
-		if (windowHeight >= Settings.MIN_WINDOW_HEIGHT) {
+		if (windowHeight >= StandaloneSettings.MIN_WINDOW_HEIGHT) {
 			Global.PRIMARY_STAGE.setHeight(windowHeight);
 		}
 	}
@@ -576,7 +576,7 @@ public class WindowFrame extends BorderPane {
 
 		double windowHeight = Global.PRIMARY_STAGE.getHeight() - diffY;
 
-		if (windowHeight >= Settings.MIN_WINDOW_HEIGHT) {
+		if (windowHeight >= StandaloneSettings.MIN_WINDOW_HEIGHT) {
 			Global.PRIMARY_STAGE.setY(Global.PRIMARY_STAGE.getY() + diffY);
 			this.SetHeight(windowHeight);
 		}
@@ -604,7 +604,7 @@ public class WindowFrame extends BorderPane {
 		double diffX       = event.getScreenX() - this._rearLeftEdgePrevX;
 		double windowWidth = Global.PRIMARY_STAGE.getWidth() - diffX;
 
-		if (windowWidth >= Settings.MIN_WINDOW_WIDTH) {
+		if (windowWidth >= StandaloneSettings.MIN_WINDOW_WIDTH) {
 			Global.PRIMARY_STAGE.setX(Global.PRIMARY_STAGE.getX() + diffX);
 			this.SetWidth(windowWidth);
 		}

@@ -1,14 +1,14 @@
 package com.kilcote.evocraft.views.game._base;
 
-import com.kilcote.evocraft.common.Settings;
-import com.kilcote.evocraft.engine._base.GameObjModel;
+import com.kilcote.evocraft.common.StandaloneSettings;
+import com.kilcote.evocraft.engine._base.IGameObjModel;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
-public abstract class GameObjUI<T extends GameObjModel> {
+public abstract class GameObjUI<T extends IGameObjModel> {
 	
 	private T model = null;
 	protected GridPane parent;
@@ -26,26 +26,26 @@ public abstract class GameObjUI<T extends GameObjModel> {
 	//----------------------------------------------Static Methods ----------------------------------------------
 	public static void SetElipseColor(Shape elipse, int playerId) {
 		if (playerId == 1) {
-			elipse.setFill(Paint.valueOf(Settings.playerTownFill.toString()));
-			elipse.setStroke(Paint.valueOf(Settings.playerTownStroke.toString()));
+			elipse.setFill(Paint.valueOf(StandaloneSettings.playerTownFill.toString()));
+			elipse.setStroke(Paint.valueOf(StandaloneSettings.playerTownStroke.toString()));
 		} else if (playerId != 0) {
-			elipse.setFill(Settings.TownFills.get(playerId - 2));
-			elipse.setStroke(Settings.TownStrokes.get(playerId - 2));
+			elipse.setFill(StandaloneSettings.TownFills.get(playerId - 2));
+			elipse.setStroke(StandaloneSettings.TownStrokes.get(playerId - 2));
 		}
-		elipse.setStrokeWidth(Settings.cityPassiveStrokeThickness);
+		elipse.setStrokeWidth(StandaloneSettings.cityPassiveStrokeThickness);
 	}
 
 	public static void SetUiColor(Shape shape, int playerId) {
 		if (playerId == 1) {
-			shape.setFill(Paint.valueOf(Settings.playerTownFill.toString()));
+			shape.setFill(Paint.valueOf(StandaloneSettings.playerTownFill.toString()));
 		} else if (playerId != 0) {
-			if (Settings.TownFills.size() <= playerId - 2) {
-				shape.setFill(Paint.valueOf(Settings.TownFills.toString()));
+			if (StandaloneSettings.TownFills.size() <= playerId - 2) {
+				shape.setFill(Paint.valueOf(StandaloneSettings.TownFills.toString()));
 			} else {
-				shape.setFill(Paint.valueOf(Settings.TownFills.get(playerId - 2).toString()));
+				shape.setFill(Paint.valueOf(StandaloneSettings.TownFills.get(playerId - 2).toString()));
 			}
 		} else {
-			shape.setFill(Paint.valueOf(Settings.neutralTownFill.toString()));
+			shape.setFill(Paint.valueOf(StandaloneSettings.neutralTownFill.toString()));
 		}
 	}
 }

@@ -40,7 +40,7 @@ public class Global {
 
 				input.close();
 
-				String firmDrawProcessName = Settings.WINDOW_TITLE.toLowerCase();
+				String firmDrawProcessName = StandaloneSettings.WINDOW_TITLE.toLowerCase();
 
 				for (String processName : pidInfo) {
 					if (processName.toLowerCase().contains(firmDrawProcessName)) {
@@ -61,7 +61,7 @@ public class Global {
 
 		Global.PRIMARY_STAGE = primaryStage;
 		Global.PRIMARY_STAGE.initStyle(StageStyle.TRANSPARENT);
-		Global.PRIMARY_STAGE.getIcons().add(ResourceUtils.getResourceImage(Settings.APP_ICON));
+		Global.PRIMARY_STAGE.getIcons().add(ResourceUtils.getResourceImage(StandaloneSettings.APP_ICON));
 	}
 
 	public static void LOAD_AT_END(WindowFrame frame, EvoCraftPane program) {

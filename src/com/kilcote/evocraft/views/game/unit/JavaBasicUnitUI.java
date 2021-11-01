@@ -1,16 +1,16 @@
 package com.kilcote.evocraft.views.game.unit;
 
-import com.kilcote.evocraft.common.Settings;
-import com.kilcote.evocraft.engine.unit.BasicUnitModel;
+import com.kilcote.evocraft.common.StandaloneSettings;
+import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
 import com.kilcote.evocraft.views.game._base.GameObjUI;
 
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class BasicUnitUI extends GameObjUI<BasicUnitModel>  { 
+public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  { 
 	//---------------------------------------------- Constructor ----------------------------------------------
-	public BasicUnitUI(BasicUnitModel model) {
+	public JavaBasicUnitUI(JavaBasicUnitModel model) {
 		setModel(model);
 		model.setUI(this);
 	}
@@ -27,20 +27,20 @@ public class BasicUnitUI extends GameObjUI<BasicUnitModel>  {
 	@Override
 	public void InvalidateDraw() {
 		if (shape == null) {
-			shape = new BasicUnitPane();
+			shape = new JavaBasicUnitPane();
 			parent.getChildren().add(shape);
 			
 			RecalcGeometrySize();
 			this.rectangle = new Rectangle(20, 20);
 			
-			this.rectangle.setFill(Settings.TownFills.get(getModel().playerId - 1));
-			this.rectangle.setStroke(Settings.neutralTownStroke);
+			this.rectangle.setFill(StandaloneSettings.TownFills.get(getModel().playerId - 1));
+			this.rectangle.setStroke(StandaloneSettings.neutralTownStroke);
 			
 			SetElipseColor(rectangle, this.getModel().playerId);
 			shape.getChildren().add(rectangle);
 
 			text = new Label();
-			text.setTextFill(Settings.TownStrokes.get(getModel().playerId - 1));
+			text.setTextFill(StandaloneSettings.TownStrokes.get(getModel().playerId - 1));
 			shape.getChildren().add(text);
 			
 			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth());
@@ -51,19 +51,19 @@ public class BasicUnitUI extends GameObjUI<BasicUnitModel>  {
 		pixelPerTurnY = this.shape.getHeight() / getModel().tickPerTurn;
 		
 		SetShapeProperties();
-		if (getModel().currPathIndex < getModel().path.size() && (getModel().path.get(getModel().currPathIndex).getKey() > getModel().path.get(getModel().currPathIndex + 1).getKey())) {
+		if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getKey() > getModel().path.get(getModel().currPathIndex + 1).getKey())) {
 			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() - getModel().currTickOnCell * pixelPerTurnX + shiftX);
-		} else if (getModel().currPathIndex < getModel().path.size() && (getModel().path.get(getModel().currPathIndex).getKey() < getModel().path.get(getModel().currPathIndex + 1).getKey())) {
+		} else if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getKey() < getModel().path.get(getModel().currPathIndex + 1).getKey())) {
 			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() + getModel().currTickOnCell * pixelPerTurnX + shiftX);
-		} else {
+		} else if (getModel().currPathIndex < getModel().path.size()) {
 			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() + shiftX);
 		}
 
-		if (getModel().currPathIndex < getModel().path.size() && (getModel().path.get(getModel().currPathIndex).getValue() > getModel().path.get(getModel().currPathIndex + 1).getValue())) {
+		if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getValue() > getModel().path.get(getModel().currPathIndex + 1).getValue())) {
 			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() - getModel().currTickOnCell * pixelPerTurnY + shiftY);
-		} else if (getModel().currPathIndex < getModel().path.size() && (getModel().path.get(getModel().currPathIndex).getValue() < getModel().path.get(getModel().currPathIndex + 1).getValue())) {
+		} else if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getValue() < getModel().path.get(getModel().currPathIndex + 1).getValue())) {
 			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() + getModel().currTickOnCell * pixelPerTurnY + shiftY);
-		} else {
+		} else if (getModel().currPathIndex < getModel().path.size()) {
 			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() + shiftY);
 		}
 	}
@@ -83,8 +83,8 @@ public class BasicUnitUI extends GameObjUI<BasicUnitModel>  {
 	}
 	
 	protected void RecalcGeometrySize() {
-		pixelPerTurnX = Settings.oneCellSizeX / getModel().tickPerTurn;
-		pixelPerTurnY = Settings.oneCellSizeY / getModel().tickPerTurn;
+		pixelPerTurnX = StandaloneSettings.oneCellSizeX / getModel().tickPerTurn;
+		pixelPerTurnY = StandaloneSettings.oneCellSizeY / getModel().tickPerTurn;
 		shiftX = 0;
 		shiftY = 0;
 	}

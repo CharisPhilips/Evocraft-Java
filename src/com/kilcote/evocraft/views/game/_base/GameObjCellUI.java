@@ -1,10 +1,10 @@
 package com.kilcote.evocraft.views.game._base;
 
-import com.kilcote.evocraft.engine._base.GameObjModel;
+import com.kilcote.evocraft.engine._base.IGameObjModel;
 
 import javafx.scene.layout.GridPane;
 
-public abstract class GameObjCellUI<T extends GameObjModel> extends GameObjUI<T> {
+public abstract class GameObjCellUI<T extends IGameObjModel> extends GameObjUI<T> {
 
 	//---------------------------------------------- Methods ----------------------------------------------
 	public void InitalizeCell(GridPane parent, int column, int row) {
