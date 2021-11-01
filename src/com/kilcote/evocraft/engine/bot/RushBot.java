@@ -286,11 +286,11 @@ public class RushBot extends BasicBot {
 		return (int)Math.round(avg);
 	}
 
-	private double GetEnemyArmy(BasicCityModel sityTo) {
-		if (sityTo.playerId == 0)
-			return sityTo.currWarriors + Settings.bot_rushBot_Rush_MinimumMore;
+	private double GetEnemyArmy(BasicCityModel cityTo) {
+		if (cityTo.playerId == 0)
+			return cityTo.currWarriors + Settings.bot_rushBot_Rush_MinimumMore;
 		else
-			return sityTo.currWarriors + Settings.bot_rushBot_Rush_MinimumMore
-					+ ((Settings.basicUnit_ticks_MoveWarrior * GetAvgDistance(sityTo)) / sityTo.ticksPerIncome);
+			return cityTo.currWarriors + Settings.bot_rushBot_Rush_MinimumMore
+					+ ((Settings.basicUnit_ticks_MoveWarrior * GetAvgDistance(cityTo)) / cityTo.ticksPerIncome);
 	}
 }

@@ -34,7 +34,7 @@ public class Settings {
 	public static int fieldSizeX = 10;
 	public static int fieldSizeY = 10;
 
-	public static int milisecondsPerTick = 1;
+	public static int milisecondsPerTick = 100;
 
 	public static boolean gameplay_SaveWarriorsOverCap = true;
 	public static boolean gameplay_EqualsMeansCapture = true;

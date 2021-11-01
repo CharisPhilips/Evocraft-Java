@@ -56,12 +56,15 @@ public class EvoCraftPane extends BorderPane {
 	public static final String FEATURE_FIND_HOVER_IN_ICON = "find-feature-hover-in.png";
 	public static final String FEATURE_FIND_COLOR = "#006DF0";
 
-	public final IconToggleButton PlayButton = new IconToggleButton("Present", "menu/" + "play-button.png", new String[]{"View as Presentation", "F5"});
+	public final IconToggleButton PlayButton = new IconToggleButton("Play", "menu/" + "play-button.png", new String[]{"View as Presentation", "F5"});
+	public final IconToggleButton PauseButton = new IconToggleButton("Pause", "menu/" + "pause-button.png", new String[]{"View as Presentation", "F5"});
 	public final IconToggleButton FullScreenButton = new IconToggleButton("Full Screen", "menu/" + "fullscreen-symbol.png", new String[]{"Full Screen", "Ctrl + Shift + F"});
 
 //	public final GamePage gamePage = new GamePage(this.MiddleLayout);
 //	public final GridPane gamePage = new GridPane();
 
+	private Game game = null; 
+			
 	public EvoCraftPane() {
 		this._initializeData();
 		this._initializeGUI();
@@ -88,6 +91,7 @@ public class EvoCraftPane extends BorderPane {
 		this.setTop(this.TopToolBar);
 
 		this.PlayButton.setPadding(new Insets(3, 6, 3, 6));
+		this.PauseButton.setPadding(new Insets(3, 6, 3, 6));
 		this.FullScreenButton.setPadding(new Insets(3, 6, 3, 6));
 
 		this.TopToolBar.getItems().addAll(
@@ -168,9 +172,26 @@ public class EvoCraftPane extends BorderPane {
         this.PlayButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-        		Game game = new Game(GameLayout, Settings.fieldSizeX, Settings.fieldSizeY);
-    			game.Play();
-            	
+            	if (game == null) {
+            		game = new Game(GameLayout, Settings.fieldSizeX, Settings.fieldSizeY);
+            		game.Play();
+            	} else {
+            		game.Resume();
+            	}
+    			
+    			int index = EvoCraftPane.this.TopToolBar.getItems().indexOf(PlayButton);
+    			EvoCraftPane.this.TopToolBar.getItems().remove(index);
+    			EvoCraftPane.this.TopToolBar.getItems().add(index, PauseButton);
+            }
+        });
+        
+        this.PauseButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+    			game.Pause();
+    			int index = EvoCraftPane.this.TopToolBar.getItems().indexOf(PauseButton);
+    			EvoCraftPane.this.TopToolBar.getItems().remove(index);
+    			EvoCraftPane.this.TopToolBar.getItems().add(index, PlayButton);
             }
         });
 	}

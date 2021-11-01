@@ -62,44 +62,47 @@ public class BasicCityUI extends GameObjCellUI<BasicCityModel> {
 			this.shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent event) {
-					if (event.getButton() == MouseButton.PRIMARY) {
-						if (event.getClickCount() == 2) {
-							if (BasicCityUI.this.getModel().playerId == 1) {
-								getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
-								for(BasicCityModel x : JavaClient.g_selectedCities) {
-									switch (Settings.style_Num) {
-									case 0:
-										SetUiColor((Shape)cityModel, BasicCityUI.this.getModel().playerId);
-										break;
-									case 1:
-										SetCityImgProperties();
-										break;
+					if (getModel().gameMap.getGameEngine().isPlaying()) {
+						
+						if (event.getButton() == MouseButton.PRIMARY) {
+							if (event.getClickCount() == 2) {
+								if (BasicCityUI.this.getModel().playerId == 1) {
+									getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
+									for(BasicCityModel x : JavaClient.g_selectedCities) {
+										switch (Settings.style_Num) {
+										case 0:
+											SetUiColor((Shape)cityModel, BasicCityUI.this.getModel().playerId);
+											break;
+										case 1:
+											SetCityImgProperties();
+											break;
+										}
 									}
+									JavaClient.clearSelectCities();
 								}
-								JavaClient.clearSelectCities();
+							} else {
+								if (BasicCityUI.this.getModel().playerId == 1) {
+									if (!JavaClient.g_selectedCities.contains(this)) {
+										JavaClient.selectCity(BasicCityUI.this.getModel());
+									}
+								} else if (BasicCityUI.this.getModel().playerId != 1) {
+									getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
+									for(BasicCityModel x : JavaClient.g_selectedCities) {
+										switch (Settings.style_Num) {
+										case 0:
+											SetUiColor((Shape) BasicCityUI.this.cityModel, BasicCityUI.this.getModel().playerId);
+											break;
+										case 1:
+											SetCityImgProperties();
+											break;
+										}
+									}
+									JavaClient.clearSelectCities();
+								}
 							}
 						} else {
-							if (BasicCityUI.this.getModel().playerId == 1) {
-								if (!JavaClient.g_selectedCities.contains(this)) {
-									JavaClient.selectCity(BasicCityUI.this.getModel());
-								}
-							} else if (BasicCityUI.this.getModel().playerId != 1) {
-								getModel().gameMap.SendWarriors(JavaClient.g_selectedCities, BasicCityUI.this.getModel());
-								for(BasicCityModel x : JavaClient.g_selectedCities) {
-									switch (Settings.style_Num) {
-									case 0:
-										SetUiColor((Shape) BasicCityUI.this.cityModel, BasicCityUI.this.getModel().playerId);
-										break;
-									case 1:
-										SetCityImgProperties();
-										break;
-									}
-								}
-								JavaClient.clearSelectCities();
-							}
+							JavaClient.deselectCity(BasicCityUI.this.getModel());
 						}
-					} else {
-						JavaClient.deselectCity(BasicCityUI.this.getModel());
 					}
 				}
 			});

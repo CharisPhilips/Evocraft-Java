@@ -37,6 +37,8 @@ public class Game extends AnimationTimer {
 	private IFactoryUI mUIGeneartor = new JavaUI();
 	private String winner = null;
 
+	private boolean isPlaying = false;
+	
 	public Game(GridPane gamePage, int X, int Y) {
 		mainGrid = gamePage;
 		this.x = X;
@@ -45,6 +47,15 @@ public class Game extends AnimationTimer {
 
 	}
 
+	public boolean isPlaying() {
+		return isPlaying;
+	}
+
+	public void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+	}
+
+	
 	@Override
 	public void handle(long now) {
 		if (lastUpdate == null || (TimeUnit.MILLISECONDS.convert((now - lastUpdate), TimeUnit.NANOSECONDS) > Settings.milisecondsPerTick)) {
@@ -59,7 +70,18 @@ public class Game extends AnimationTimer {
 		if (mUIGeneartor instanceof JavaUI) {
 			InitializeDraw();
 		}
+		isPlaying = true;
 		this.start();
+	}
+
+	public void Resume() {
+		isPlaying = true;
+		this.start();
+	}
+
+	public void Pause() {
+		isPlaying = false;
+		this.stop();
 	}
 
 	private void CreateGameMap() {
@@ -78,6 +100,7 @@ public class Game extends AnimationTimer {
 				);
 
 		mUIGeneartor.generateGameMap(gameMap);
+		gameMap.setGameEngine(this);
 		
 		for (int i = 0; i < Settings.generator_CityId_Bots; ++i) {
 			gameMap.SetBot(i, new RushBot(gameMap, gameMap.cities, gameMap.units, (byte)(i + 2)));

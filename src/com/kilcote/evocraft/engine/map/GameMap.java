@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kilcote.evocraft.common.Settings;
+import com.kilcote.evocraft.engine.Game;
 import com.kilcote.evocraft.engine._base.GameObjModel;
 import com.kilcote.evocraft.engine.bot._base.BasicBot;
 import com.kilcote.evocraft.engine.cell.GameCellModel;
@@ -27,7 +28,9 @@ public class GameMap extends GameObjModel<GameMapUI> {
 	
 	public GameCellModel[][] map;
 	
+	private Game gameEngine = null;
 	private IFactoryUI mUIGeneartor = null;
+	
 
 	//---------------------------------------------- Constructor----------------------------------------------
 	public GameMap(int SizeX, int SizeY, IFactoryUI uiGeneartor) {
@@ -51,7 +54,15 @@ public class GameMap extends GameObjModel<GameMapUI> {
 	}
 
 	//---------------------------------------------- Methods ----------------------------------------------
+
+	public Game getGameEngine() {
+		return gameEngine;
+	}
 	
+	public void setGameEngine(Game game) {
+		this.gameEngine = game;
+	}
+
 	public IFactoryUI getUIGeneartor() { return mUIGeneartor; }
 	
 	public void Tick() {
