@@ -29,8 +29,8 @@ public class JavaGameMapUI extends GameObjCellUI<JavaGameMap> {
 	}
 	
 	public void Initialize() {
-		for (int y = 0; y < getModel().getSizeY(); ++y) {
-			for (int x = 0; x < getModel().getSizeX(); ++x) {
+		for (int y = 0; y < getModel().getSizeY(); y++) {
+			for (int x = 0; x < getModel().getSizeX(); x++) {
 				((IGameObjModel<JavaGameCellUI>) getModel().getMapCell(y, x)).getUI().InitalizeCell(parent, x, y);
 				if (getModel().getMapCell(y, x).city != null) {
 					((JavaBasicCityModel) getModel().getMapCell(y, x).city).getUI().InitalizeCell(parent, x, y);

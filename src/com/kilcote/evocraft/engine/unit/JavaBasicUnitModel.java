@@ -24,6 +24,9 @@ public class JavaBasicUnitModel extends BasicUnitModel implements IGameObjModel<
 		//---------------------------------------------- Properties ----------------------------------------------
 		this.playerId = unit.playerId;
 		this.gameMap = unit.gameMap;
+		
+		this.gameMap.getMapCell(path.get(currPathIndex).getValue(), path.get(currPathIndex).getKey()).units.remove(unit);
+		this.gameMap.getMapCell(path.get(currPathIndex).getValue(), path.get(currPathIndex).getKey()).units.add(this);
 	}
 	
 	//---------------------------------------------- Methods ----------------------------------------------

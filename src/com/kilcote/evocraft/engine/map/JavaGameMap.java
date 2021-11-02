@@ -65,8 +65,12 @@ public class JavaGameMap extends GameMap implements IGameObjModel<JavaGameMapUI>
 		if (from.getUuid().equals(to.getUuid())) {
 			return;
 		}
-		JavaBasicUnitModel unit = new JavaBasicUnitModel(from.SendUnit(to));
-		javaGameEngine.getUIGeneartor().generateBasicUnit(unit);
-		units.add(unit);
+		BasicUnitModel unit = from.SendUnit(to);
+		if (unit == null) {
+			return;
+		}
+		JavaBasicUnitModel javaUnit = new JavaBasicUnitModel(unit);
+		javaGameEngine.getUIGeneartor().generateBasicUnit(javaUnit);
+		units.add(javaUnit);
 	}
 }
