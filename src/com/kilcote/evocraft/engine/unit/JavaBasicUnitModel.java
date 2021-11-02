@@ -5,7 +5,7 @@ import com.kilcote.evocraft.engine.interfaces.Settingable;
 import com.kilcote.evocraft.engine.interfaces.Tickable;
 import com.kilcote.evocraft.views.game.unit.JavaBasicUnitUI;
 
-public class JavaBasicUnitModel extends BasicUnitModel implements IGameObjModel<JavaBasicUnitUI> , Tickable, Settingable { 
+public class JavaBasicUnitModel extends BasicUnitModel implements IGameObjModel<JavaBasicUnitUI>, Tickable, Settingable { 
 
 	private JavaBasicUnitUI ui = null;
 	
