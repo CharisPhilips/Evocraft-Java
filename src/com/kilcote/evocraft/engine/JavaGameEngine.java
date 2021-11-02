@@ -72,7 +72,7 @@ public class JavaGameEngine extends AnimationTimer {
 	private void CreateGameMap() {
 		this.engine.CreateGameMap();
 		gameMap = new JavaGameMap(this.engine.getGameMap(), this);
-		
+		this.engine.setGameMap(gameMap);
 		StandaloneSettings.oneCellSizeX = 10;
 		StandaloneSettings.oneCellSizeY = 10;
 
@@ -112,8 +112,8 @@ public class JavaGameEngine extends AnimationTimer {
 	}
 	
 	private void WinProcess() {
-		int id = 0;
-		if (engine.IsWin(id)) {
+		Integer id = engine.IsWin();
+		if (id != null) {
 			this.stop();
 			mainGrid.getChildren().clear();
 			if (id == 1) {
