@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.kilcote.evocraft.common.StandaloneSettings;
 import com.kilcote.evocraft.engine.map.JavaGameMap;
 import com.kilcote.evocraft.views.WindowFrame;
+import com.kilcote.evocraft.views.game.JavaClient;
 import com.kilcote.evocraft.views.game._base.mapping.IFactoryUI;
 import com.kilcote.evocraft.views.game._base.mapping.JavaUI;
 
@@ -115,6 +116,7 @@ public class JavaGameEngine extends AnimationTimer {
 		Integer id = engine.IsWin();
 		if (id != null) {
 			this.stop();
+			JavaClient.clearSelectCities();
 			mainGrid.getChildren().clear();
 			if (id == 1) {
 				winner = "You win!";
