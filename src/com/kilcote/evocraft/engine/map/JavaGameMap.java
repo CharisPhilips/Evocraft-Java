@@ -7,7 +7,6 @@ import com.kilcote.evocraft.engine.JavaGameEngine;
 import com.kilcote.evocraft.engine._base.IGameObjModel;
 import com.kilcote.evocraft.engine.cell.GameCellModel;
 import com.kilcote.evocraft.engine.cell.JavaGameCellModel;
-import com.kilcote.evocraft.engine.city.BasicCityModel;
 import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
 import com.kilcote.evocraft.views.game.map.JavaGameMapUI;
@@ -61,16 +60,16 @@ public class JavaGameMap extends GameMap implements IGameObjModel<JavaGameMapUI>
 		this.javaGameEngine = javaGameEngine;
 	}
 	
-	public void SendWarriors(BasicCityModel from, BasicCityModel to) {
-		if (from.getUuid().equals(to.getUuid())) {
-			return;
-		}
-		BasicUnitModel unit = from.SendUnit(to);
-		if (unit == null) {
-			return;
-		}
-		JavaBasicUnitModel javaUnit = new JavaBasicUnitModel(unit);
-		javaGameEngine.getUIGeneartor().generateBasicUnit(javaUnit);
-		units.add(javaUnit);
-	}
+//	public void SendWarriors(BasicCityModel from, BasicCityModel to) {
+//		if (from.getUuid().equals(to.getUuid())) {
+//			return;
+//		}
+//		BasicUnitModel unit = from.SendUnit(to);
+//		if (unit == null) {
+//			return;
+//		}
+//		JavaBasicUnitModel javaUnit = new JavaBasicUnitModel(unit);
+//		javaGameEngine.getUIGeneartor().generateBasicUnit(javaUnit);
+//		units.add(javaUnit);
+//	}
 }

@@ -131,15 +131,15 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 		} else {
 			image.setVisible(true);
 			if (getModel().playerId == 1) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p1_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+				image.setImage(ResourceUtils.getResourceImage("cities/city_p1_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
 			} else if (getModel().playerId == 2) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p2_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+				image.setImage(ResourceUtils.getResourceImage("cities/city_p2_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
 			} else if (getModel().playerId == 3) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p3_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+				image.setImage(ResourceUtils.getResourceImage("cities/city_p3_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
 			} else if (getModel().playerId == 4) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p4_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+				image.setImage(ResourceUtils.getResourceImage("cities/city_p4_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
 			} else {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+				image.setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
 			}
 			image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
 			image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
@@ -152,13 +152,13 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 		} else {
 			ivSelection.setVisible(true);
 			if (this.getModel().playerId == 1) {
-				ivSelection.setImage(ResourceUtils.getResourceImage("war/our_selector.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
+				ivSelection.setImage(ResourceUtils.getResourceImage("war/our_selector.png", shape.getWidth(), shape.getHeight(), true, true));
 				ivSelection.setLayoutX(this.shape.getWidth() / 2 - (ivSelection.getImage().getWidth() / 2));
 				ivSelection.setLayoutY(this.shape.getHeight() / 2 - (ivSelection.getImage().getHeight() / 2));				
 			} else {
 				ivSelection.setImage(ResourceUtils.getResourceImage("war/enemy_selector.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				ivSelection.setLayoutX(this.shape.getWidth() / 2 - (ivSelection.getImage().getWidth() / 2));
-				ivSelection.setLayoutY(this.shape.getHeight() / 2 - (ivSelection.getImage().getHeight() / 2));
+				ivSelection.setLayoutX(this.shape.getWidth() / 2 - (ivSelection.getImage().getWidth()));
+				ivSelection.setLayoutY(this.shape.getHeight() / 2 - (ivSelection.getImage().getHeight()));
 			}
 			if (mSelect) {
 				ivSelection.setOpacity(1);

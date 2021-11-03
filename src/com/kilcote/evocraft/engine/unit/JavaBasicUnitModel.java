@@ -18,6 +18,7 @@ public class JavaBasicUnitModel extends BasicUnitModel implements IGameObjModel<
 		this.currTickOnCell = unit.currTickOnCell;
 
 		this.warriorsCnt = unit.warriorsCnt;
+		this.atkPersent = unit.atkPersent;
 		this.tickPerTurn = unit.tickPerTurn;
 		this.destination = unit.destination;
 

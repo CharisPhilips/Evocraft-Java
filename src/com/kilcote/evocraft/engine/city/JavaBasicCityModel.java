@@ -1,7 +1,10 @@
 package com.kilcote.evocraft.engine.city;
 
+import com.kilcote.evocraft.engine.JavaGameEngine;
 import com.kilcote.evocraft.engine._base.IGameObjModel;
 import com.kilcote.evocraft.engine.map.JavaGameMap;
+import com.kilcote.evocraft.engine.unit.BasicUnitModel;
+import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
 import com.kilcote.evocraft.views.game.city.JavaBasicCityUI;
 
 public class JavaBasicCityModel extends BasicCityModel implements IGameObjModel<JavaBasicCityUI> {
@@ -21,6 +24,7 @@ public class JavaBasicCityModel extends BasicCityModel implements IGameObjModel<
 		this.atkPersent = city.atkPersent;
 		this.defPersent = city.defPersent;
 		this.pathToCities = city.pathToCities;
+		this.departedUnits = city.departedUnits;
 		this.gameMap = gameMap;
 	}
 
@@ -34,6 +38,17 @@ public class JavaBasicCityModel extends BasicCityModel implements IGameObjModel<
 	@Override
 	public JavaBasicCityUI getUI() {
 		return ui;
+	}
+	
+	@Override
+	public BasicUnitModel getDepartedUnit() {
+		BasicUnitModel unit = super.getDepartedUnit();
+		if (unit == null) {
+			return null;
+		}
+		JavaBasicUnitModel javaUnit = new JavaBasicUnitModel(unit);
+		((JavaGameMap)gameMap).getJavaGameEngine().getUIGeneartor().generateBasicUnit(javaUnit);
+		return javaUnit;
 	}
 
 }
