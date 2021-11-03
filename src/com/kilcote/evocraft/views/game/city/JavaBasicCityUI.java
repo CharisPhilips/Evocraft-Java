@@ -40,24 +40,6 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 	public void InvalidateDraw() {
 		if (shape == null) {
 			shape = new JavaBasicCityPane();
-			//Elipse
-			label = new Label();
-			label.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(label.getHeight() / 2), Insets.EMPTY)));
-			label.setTextFill(Color.web("#ffffff"));
-			switch (StandaloneSettings.style_Num) {
-			case 0:
-				cityModel = new Circle(this.shape.getWidth() / 2 , this.shape.getHeight() / 2, 40);
-				SetUiColor((Shape)cityModel, this.getModel().playerId);
-				break;
-			case 1:
-				cityModel = ResourceUtils.getResourceImageView("cities/city_p0_s4_l5.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true);
-				SetCityImgProperties();
-				break;
-			}
-			ivSelection = ResourceUtils.getResourceImageView("war/our_selector.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true);
-			shape.getChildren().add(cityModel);
-			shape.getChildren().add(label);
-			shape.getChildren().add(ivSelection);
 			
 			this.shape.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
@@ -106,65 +88,90 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 					}
 				}
 			});
+		} else if (shape.getWidth() != 0 || shape.getHeight() != 0) {
+			//Label
+			SetLabelProperties();
+			
+			//Shape
+			switch (StandaloneSettings.style_Num) {
+			case 0:
+				if (cityModel == null) {
+					cityModel = new Circle(this.shape.getWidth() / 2 , this.shape.getHeight() / 2, 40);
+					SetUiColor((Shape)cityModel, this.getModel().playerId);
+					((Circle)this.cityModel).setCenterX(this.shape.getWidth() / 2);
+					((Circle)this.cityModel).setCenterY(this.shape.getHeight() / 2);
+					((Circle)this.cityModel).setRadius(this.shape.getHeight() / 2);
+					shape.getChildren().add(cityModel);
+				}
+				break;
+			case 1:
+				SetCityImgProperties();
+				break;
+			}
+			//Selection
+			SetSelectionImgProperties();
+		
+			if (this.cityModel != null && cityModel instanceof ImageView) {
+				SetCityImgProperties();
+			}
+		}
+	}
+	
+	public void SetLabelProperties() {
+		if (label == null) {
+			label = new Label();
+			label.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, new CornerRadii(label.getHeight() / 2), Insets.EMPTY)));
+			label.setTextFill(Color.web("#ffffff"));
+			shape.getChildren().add(label);
+			label.relocate(this.shape.getWidth() * 1 / 8, this.shape.getHeight() * 1 / 8);
 		}
 		label.setText(String.valueOf((int)Math.ceil(getModel().currWarriors)) + '/' + String.valueOf(getModel().maxWarriors));
-		label.relocate(this.shape.getWidth() * 1 / 8, this.shape.getHeight() * 1 / 8);
-		if (this.cityModel != null && cityModel instanceof Circle) {
-			((Circle)this.cityModel).setCenterX(this.shape.getWidth() / 2);
-			((Circle)this.cityModel).setCenterY(this.shape.getHeight() / 2);
-			((Circle)this.cityModel).setRadius(this.shape.getHeight() / 2);
-		}
-		if (this.cityModel != null && cityModel instanceof ImageView) {
-			SetCityImgProperties();
-		}
-		(this.ivSelection).setLayoutX(this.shape.getWidth() / 2);
-		(this.ivSelection).setLayoutX(this.shape.getHeight() / 2);
-		SetSelectionImgProperties();
 	}
 
-	public static double CITY_IMAGE_WIDTH = 60;
-	
 	public void SetCityImgProperties() {
-		ImageView image = (ImageView)cityModel;
-		if (shape.getWidth() == 0 || shape.getHeight()==0) {
-			image.setVisible(false);
-		} else {
-			image.setVisible(true);
-			if (getModel().playerId == 1) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p1_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
-			} else if (getModel().playerId == 2) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p2_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
-			} else if (getModel().playerId == 3) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p3_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
-			} else if (getModel().playerId == 4) {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p4_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
+		switch (getModel().playerId) {
+		case 1: case 2: case 3: case 4:
+			if (cityModel == null) {
+				cityModel = ResourceUtils.getResourceImageView(String.format("cities/city_p%d_s4_l5.png", getModel().playerId), shape.getWidth(), shape.getHeight(), true, true);
+				shape.getChildren().add(cityModel);
 			} else {
-				image.setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
+				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/city_p%d_s4_l5.png", getModel().playerId), shape.getWidth(), shape.getHeight(), true, true));
 			}
-			image.setLayoutX(this.shape.getWidth() / 2 - (image.getImage().getWidth() / 2));
-			image.setLayoutY(this.shape.getHeight() / 2 - (image.getImage().getHeight() / 2));
+			break;
+		default:
+			if (cityModel == null) {
+				cityModel = ResourceUtils.getResourceImageView("cities/city_p0_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true);
+				shape.getChildren().add(cityModel);
+			} else {
+				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
+			}
 		}
+		((ImageView)cityModel).setLayoutX(this.shape.getWidth() / 2 - (((ImageView)cityModel).getImage().getWidth() / 2));
+		((ImageView)cityModel).setLayoutY(this.shape.getHeight() / 2 - (((ImageView)cityModel).getImage().getHeight() / 2));
 	}
 	
 	public void SetSelectionImgProperties() {
-		if (shape.getWidth() == 0 || shape.getHeight()==0) {
-			ivSelection.setVisible(false);
-		} else {
-			ivSelection.setVisible(true);
-			if (this.getModel().playerId == 1) {
+		if (this.getModel().playerId == 1) {
+			if (ivSelection == null) {
+				ivSelection = ResourceUtils.getResourceImageView("war/our_selector.png", shape.getWidth(), shape.getHeight(), true, true);
+				shape.getChildren().add(ivSelection);
+			} else {
 				ivSelection.setImage(ResourceUtils.getResourceImage("war/our_selector.png", shape.getWidth(), shape.getHeight(), true, true));
-				ivSelection.setLayoutX(this.shape.getWidth() / 2 - (ivSelection.getImage().getWidth() / 2));
-				ivSelection.setLayoutY(this.shape.getHeight() / 2 - (ivSelection.getImage().getHeight() / 2));				
-			} else {
-				ivSelection.setImage(ResourceUtils.getResourceImage("war/enemy_selector.png", CITY_IMAGE_WIDTH, CITY_IMAGE_WIDTH, true, true));
-				ivSelection.setLayoutX(this.shape.getWidth() / 2 - (ivSelection.getImage().getWidth()));
-				ivSelection.setLayoutY(this.shape.getHeight() / 2 - (ivSelection.getImage().getHeight()));
 			}
-			if (mSelect) {
-				ivSelection.setOpacity(1);
+		} else {
+			if (ivSelection == null) {
+				ivSelection = ResourceUtils.getResourceImageView("war/enemy_selector.png", shape.getWidth(), shape.getHeight(), true, true);
+				shape.getChildren().add(ivSelection);
 			} else {
-				ivSelection.setOpacity(0);
+				ivSelection.setImage(ResourceUtils.getResourceImage("war/enemy_selector.png", shape.getWidth(), shape.getHeight(), true, true));
 			}
+		}
+		(this.ivSelection).setLayoutX(this.shape.getWidth() / 2);
+		(this.ivSelection).setLayoutX(this.shape.getHeight() / 2);
+		if (mSelect) {
+			ivSelection.setOpacity(1);
+		} else {
+			ivSelection.setOpacity(0);
 		}
 	}
 

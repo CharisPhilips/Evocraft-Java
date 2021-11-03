@@ -1,6 +1,5 @@
 package com.kilcote.evocraft.engine.city;
 
-import com.kilcote.evocraft.engine.JavaGameEngine;
 import com.kilcote.evocraft.engine._base.IGameObjModel;
 import com.kilcote.evocraft.engine.map.JavaGameMap;
 import com.kilcote.evocraft.engine.unit.BasicUnitModel;
