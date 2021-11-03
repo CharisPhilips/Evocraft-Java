@@ -17,7 +17,7 @@ public class StandaloneSettings extends Settings {
 	public static final double  MIN_WINDOW_HEIGHT         = 400;
 
 	
-	public static int milisecondsPerTick = 50;
+	public static int milisecondsPerTick = 10;
 	
 	public static int fieldSizeX = 10;
 	public static int fieldSizeY = 10;

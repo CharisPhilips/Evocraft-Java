@@ -32,6 +32,10 @@ public class JavaGameMapUI extends GameObjCellUI<JavaGameMap> {
 		for (int y = 0; y < getModel().getSizeY(); y++) {
 			for (int x = 0; x < getModel().getSizeX(); x++) {
 				((IGameObjModel<JavaGameCellUI>) getModel().getMapCell(y, x)).getUI().InitalizeCell(parent, x, y);
+			}
+		}
+		for (int y = 0; y < getModel().getSizeY(); y++) {
+			for (int x = 0; x < getModel().getSizeX(); x++) {
 				if (getModel().getMapCell(y, x).city != null) {
 					((JavaBasicCityModel) getModel().getMapCell(y, x).city).getUI().InitalizeCell(parent, x, y);
 				}
@@ -46,7 +50,6 @@ public class JavaGameMapUI extends GameObjCellUI<JavaGameMap> {
 				((IGameObjModel<JavaGameCellUI>) getModel().getMapCell(y, x)).getUI().InvalidateDraw();
 				if (getModel().getMapCell(y, x).city != null) {
 					((JavaBasicCityModel) getModel().getMapCell(y, x).city).getUI().InvalidateDraw();
-
 				}
 			}
 		}
