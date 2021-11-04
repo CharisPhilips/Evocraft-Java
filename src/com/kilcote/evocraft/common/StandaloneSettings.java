@@ -21,14 +21,14 @@ public class StandaloneSettings extends Settings {
 	
 	public static int fieldSizeX = 15;
 	public static int fieldSizeY = 8;
-//	public static int fieldSizeX = 5;
-//	public static int fieldSizeY = 5;
+//	public static int fieldSizeX = 6;
+//	public static int fieldSizeY = 3;
 	
 	static public double oneCellSizeX = 1;
 	static public double oneCellSizeY = 1;
 	
-	public static double roadWidth = 0.4;
-	public static double roadHeight = 0.4;
+	public static double roadWidth = 0.2;
+	public static double roadHeight = 0.2;
 	
 	public static double cityRatio = 0.7;
 	

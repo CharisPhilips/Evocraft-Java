@@ -1,6 +1,5 @@
 package com.kilcote.evocraft.views.components.animation;
 
-import com.kilcote.evocraft.common.StandaloneSettings;
 import com.kilcote.evocraft.utils.ResourceUtils;
 
 import javafx.geometry.Rectangle2D;
@@ -17,7 +16,8 @@ public class SpriteView extends ImageView {
     	this.numCols = numCols;
     	this.numRows = numRows;
         this.numFrames = numFrames;
-		Image image = ResourceUtils.getResourceImage(filename, shapeWidth * numCols * StandaloneSettings.roadWidth, shapeHeight * numRows * StandaloneSettings.roadHeight, true, true);
+//		Image image = ResourceUtils.getResourceImage(filename, shapeWidth * numCols * StandaloneSettings.roadWidth, shapeHeight * numRows * StandaloneSettings.roadHeight, true, true);
+		Image image = ResourceUtils.getResourceImage(filename);
 
         double cellWidth  = image.getWidth() / this.numCols;
         double cellHeight = image.getHeight() / this.numRows;

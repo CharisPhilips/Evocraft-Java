@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.kilcote.evocraft.common.StandaloneSettings;
+import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
 import com.kilcote.evocraft.views.components.animation.SpriteView;
 import com.kilcote.evocraft.views.game._base.GameObjUI;
@@ -30,7 +31,7 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 		Arrays.asList(
 			new AnmiationResource("walk", 32, 4),
 			new AnmiationResource("strong", 32, 4),
-			new AnmiationResource("fast", 21, 10)
+			new AnmiationResource("walk_flag", 32, 5)
 		)
 	);
 
@@ -61,7 +62,7 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 						32,
 						shape.getWidth(),
 						shape.getHeight()
-				);
+						);
 				shape.getChildren().add(unitModel);
 				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
 				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());

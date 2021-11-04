@@ -36,7 +36,7 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 	private ImageView ivSelection;
 	private boolean mSelect = false;
 	
-	private final static String[] city_types = { "city", "castle", "forge", "stable" };
+	private final static String[] city_types = { "city", "castle", "forge", "stable", "tower" };
 	
 	@Override
 	public void InvalidateDraw() {
