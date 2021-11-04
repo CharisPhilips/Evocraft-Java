@@ -17,16 +17,18 @@ public class StandaloneSettings extends Settings {
 	public static final double  MIN_WINDOW_HEIGHT         = 400;
 
 	
-	public static int milisecondsPerTick = 10;
+	public static int milisecondsPerTick = 100;
 	
 	public static int fieldSizeX = 15;
 	public static int fieldSizeY = 8;
+//	public static int fieldSizeX = 5;
+//	public static int fieldSizeY = 5;
 	
 	static public double oneCellSizeX = 1;
 	static public double oneCellSizeY = 1;
 	
-	public static double roadWidth = 0.3;
-	public static double roadHeight = 0.3;
+	public static double roadWidth = 0.4;
+	public static double roadHeight = 0.4;
 	
 	public static double cityRatio = 0.7;
 	

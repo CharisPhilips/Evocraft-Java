@@ -1,18 +1,18 @@
 package com.kilcote.evocraft.views.game.unit;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.kilcote.evocraft.common.StandaloneSettings;
 import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
-import com.kilcote.evocraft.utils.ResourceUtils;
 import com.kilcote.evocraft.views.components.animation.SpriteView;
 import com.kilcote.evocraft.views.game._base.GameObjUI;
 import com.kilcote.evocraft.views.game.city.JavaBasicCityPane;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 
 public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  { 
 	//---------------------------------------------- Constructor ----------------------------------------------
@@ -25,15 +25,22 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 
 	private SpriteView unitModel;
 	protected Label selection;
-	
-	private int step = 0; 
+
+	private static List<AnmiationResource> animation_data = new ArrayList<AnmiationResource>(
+		Arrays.asList(
+			new AnmiationResource("walk", 32, 4),
+			new AnmiationResource("strong", 32, 4),
+			new AnmiationResource("fast", 21, 10)
+		)
+	);
+
 	@Override
 	public void InvalidateDraw() {
 		if (shape == null) {
 			shape = new JavaBasicUnitPane();
-			
+
 			List<Node> cities = parent.getChildren().stream().filter(data->data instanceof JavaBasicCityPane).collect(Collectors.toList());
-			
+
 			int minIndex = (int) Double.POSITIVE_INFINITY;
 			for (Node city : cities) {
 				int nIndex = parent.getChildren().indexOf(city);
@@ -46,48 +53,65 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 			parent.getChildren().add(minIndex, shape);
 		} else if (shape.getWidth() != 0 || shape.getHeight() != 0) {
 			if (unitModel == null) {
-				Image image = ResourceUtils.getResourceImage(String.format("animation/unit%d_walk.png", getModel().playerId), shape.getWidth() * 32 * StandaloneSettings.roadWidth, shape.getHeight() * 4 * StandaloneSettings.roadHeight, true, true);
-				unitModel = new SpriteView(image, 4, 32);
-				shape.getChildren().add(unitModel);
 				
-				shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth());
-				shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight());
+				unitModel = new SpriteView(
+						String.format("animation/unit%d_%s.png", getModel().playerId, animation_data.get(getModel().type).keyword),
+						animation_data.get(getModel().type).cols,
+						animation_data.get(getModel().type).rows,
+						32,
+						shape.getWidth(),
+						shape.getHeight()
+				);
+				shape.getChildren().add(unitModel);
+				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
+				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
 			}
-			
+
 			SetShapeProperties();
-			
+
 		}
 	}
-	
+
 	public void SetShapeProperties() {
 		Integer direction = getModel().GetDirection();
 		if (direction != null) {
-			unitModel.draw(direction, step);
+			unitModel.draw(direction, (getModel().currTickOnCell / getModel().moveSteps));
 			unitModel.setLayoutX(this.shape.getWidth() / 2 - (unitModel.getBoundsInLocal().getWidth() / 2));
 			unitModel.setLayoutY(this.shape.getHeight() / 2 - (unitModel.getBoundsInLocal().getHeight() / 2));
-			
+
 			switch (direction) {
 			case JavaBasicUnitModel.RIGHT_PATH:
-				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) + ((getModel().currTickOnCell) * this.shape.getWidth()) / (getModel().tickPerTurn - 1));
+				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) + ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell - 1));
 				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
 				break;
 			case JavaBasicUnitModel.TOP_PATH:
-				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) - (getModel().currTickOnCell * this.shape.getHeight()) / (getModel().tickPerTurn - 1));
 				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
+				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) - (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell - 1));
 
 				break;
 			case JavaBasicUnitModel.LEFT_PATH:
-				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) - ((getModel().currTickOnCell) * this.shape.getWidth()) / (getModel().tickPerTurn - 1));
+				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) - ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell - 1));
 				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
 				break;
 			case JavaBasicUnitModel.BOTTOM_PATH:
-				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) + (getModel().currTickOnCell * this.shape.getHeight()) / (getModel().tickPerTurn - 1));
 				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
+				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) + (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell - 1));
 
 				break;
 			}
 		}
-		step++;
+	}
+
+}
+class AnmiationResource {
+	public String keyword = "";
+	public AnmiationResource(String type, int cols, int rows) {
+		super();
+		this.keyword = type;
+		this.cols = cols;
+		this.rows = rows;
 	}
 	
-}
+	public int cols = 0;
+	public int rows = 0;		
+}	

@@ -9,7 +9,6 @@ import com.kilcote.evocraft.engine.map.JavaGameMap;
 import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 import com.kilcote.evocraft.views.game._base.GameObjCellUI;
 import com.kilcote.evocraft.views.game.cell.JavaGameCellUI;
-import com.kilcote.evocraft.views.game.city.JavaBasicCityUI;
 import com.kilcote.evocraft.views.game.unit.JavaBasicUnitPane;
 import com.kilcote.evocraft.views.game.unit.JavaBasicUnitUI;
 
