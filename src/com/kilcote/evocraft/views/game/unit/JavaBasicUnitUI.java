@@ -31,7 +31,8 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 		Arrays.asList(
 			new AnmiationResource("walk", 32, 4),
 			new AnmiationResource("strong", 32, 4),
-			new AnmiationResource("walk_flag", 32, 5)
+			new AnmiationResource("walk_flag", 32, 5),
+			new AnmiationResource("strong_flag", 32, 5)
 		)
 	);
 
@@ -82,21 +83,21 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 
 			switch (direction) {
 			case JavaBasicUnitModel.RIGHT_PATH:
-				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) + ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell - 1));
+				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) + ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell));
 				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
 				break;
 			case JavaBasicUnitModel.TOP_PATH:
 				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
-				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) - (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell - 1));
+				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) - (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell));
 
 				break;
 			case JavaBasicUnitModel.LEFT_PATH:
-				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) - ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell - 1));
+				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) - ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell));
 				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
 				break;
 			case JavaBasicUnitModel.BOTTOM_PATH:
 				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
-				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) + (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell - 1));
+				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) + (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell));
 
 				break;
 			}
