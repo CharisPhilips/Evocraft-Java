@@ -19,14 +19,16 @@ public class StandaloneSettings extends Settings {
 	
 	public static int milisecondsPerTick = 10;
 	
-	public static int fieldSizeX = 10;
-	public static int fieldSizeY = 10;
+	public static int fieldSizeX = 15;
+	public static int fieldSizeY = 8;
 	
 	static public double oneCellSizeX = 1;
 	static public double oneCellSizeY = 1;
 	
-	public static double roadWidth = 0.2;
-	public static double roadHeight = 0.4;
+	public static double roadWidth = 0.3;
+	public static double roadHeight = 0.3;
+	
+	public static double cityRatio = 0.7;
 	
 	//size
 	public static double citySizeMult = 0.7;
@@ -34,7 +36,7 @@ public class StandaloneSettings extends Settings {
 
 	//view
 	public static int style_Num = 1;//1
-	public static boolean view_grid_show = false;
+	public static boolean view_grid_show = true;
 	
 	public static double cityPassiveStrokeThickness = 1;
 

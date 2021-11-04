@@ -132,18 +132,18 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 		switch (getModel().playerId) {
 		case 1: case 2: case 3: case 4:
 			if (cityModel == null) {
-				cityModel = ResourceUtils.getResourceImageView(String.format("cities/city_p%d_s4_l5.png", getModel().playerId), shape.getWidth(), shape.getHeight(), true, true);
+				cityModel = ResourceUtils.getResourceImageView(String.format("cities/city_p%d_s4_l5.png", getModel().playerId), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
 				shape.getChildren().add(cityModel);
 			} else {
-				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/city_p%d_s4_l5.png", getModel().playerId), shape.getWidth(), shape.getHeight(), true, true));
+				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/city_p%d_s4_l5.png", getModel().playerId), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
 			}
 			break;
 		default:
 			if (cityModel == null) {
-				cityModel = ResourceUtils.getResourceImageView("cities/city_p0_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true);
+				cityModel = ResourceUtils.getResourceImageView("cities/city_p0_s4_l5.png", shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
 				shape.getChildren().add(cityModel);
 			} else {
-				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", shape.getWidth(), shape.getHeight(), true, true));
+				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage("cities/city_p0_s4_l5.png", shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
 			}
 		}
 		((ImageView)cityModel).setLayoutX(this.shape.getWidth() / 2 - (((ImageView)cityModel).getImage().getWidth() / 2));
@@ -153,21 +153,21 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 	public void SetSelectionImgProperties() {
 		if (this.getModel().playerId == 1) {
 			if (ivSelection == null) {
-				ivSelection = ResourceUtils.getResourceImageView("war/our_selector.png", shape.getWidth(), shape.getHeight(), true, true);
+				ivSelection = ResourceUtils.getResourceImageView("war/our_selector.png", shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
 				shape.getChildren().add(ivSelection);
 			} else {
-				ivSelection.setImage(ResourceUtils.getResourceImage("war/our_selector.png", shape.getWidth(), shape.getHeight(), true, true));
+				ivSelection.setImage(ResourceUtils.getResourceImage("war/our_selector.png", shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
 			}
 		} else {
 			if (ivSelection == null) {
-				ivSelection = ResourceUtils.getResourceImageView("war/enemy_selector.png", shape.getWidth(), shape.getHeight(), true, true);
+				ivSelection = ResourceUtils.getResourceImageView("war/enemy_selector.png", shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
 				shape.getChildren().add(ivSelection);
 			} else {
-				ivSelection.setImage(ResourceUtils.getResourceImage("war/enemy_selector.png", shape.getWidth(), shape.getHeight(), true, true));
+				ivSelection.setImage(ResourceUtils.getResourceImage("war/enemy_selector.png", shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
 			}
 		}
-		(this.ivSelection).setLayoutX(this.shape.getWidth() / 2);
-		(this.ivSelection).setLayoutX(this.shape.getHeight() / 2);
+		this.ivSelection.setLayoutX(this.shape.getWidth() / 2 - ((ImageView)ivSelection).getImage().getWidth() / 2);
+		this.ivSelection.setLayoutY(this.shape.getHeight() / 2 - ((ImageView)ivSelection).getImage().getHeight() / 2);
 		if (mSelect) {
 			ivSelection.setOpacity(1);
 		} else {
