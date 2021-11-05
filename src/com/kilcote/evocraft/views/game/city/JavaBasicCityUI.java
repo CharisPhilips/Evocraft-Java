@@ -217,3 +217,17 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 	}
 
 }
+
+
+class CityResource {
+	public CityResource(String type, int cols, int rows) {
+		super();
+		this.keyword = type;
+		this.cols = cols;
+		this.rows = rows;
+	}
+	
+	public String keyword = "";
+	public int cols = 0;
+	public int rows = 0;		
+}	

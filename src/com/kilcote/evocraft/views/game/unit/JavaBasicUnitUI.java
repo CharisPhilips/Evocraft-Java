@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.kilcote.evocraft.common.StandaloneSettings;
-import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
 import com.kilcote.evocraft.views.components.animation.SpriteView;
 import com.kilcote.evocraft.views.game._base.GameObjUI;
@@ -29,10 +28,10 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 
 	private static List<AnmiationResource> animation_data = new ArrayList<AnmiationResource>(
 		Arrays.asList(
-			new AnmiationResource("walk", 32, 4),
+			new AnmiationResource("normal", 32, 4),
 			new AnmiationResource("strong", 32, 4),
-			new AnmiationResource("walk", 32, 4),
-			new AnmiationResource("walk_flag", 32, 5)
+			new AnmiationResource("strong", 32, 4),
+			new AnmiationResource("elite", 32, 5)
 		)
 	);
 
@@ -105,15 +104,16 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 	}
 
 }
+
 class AnmiationResource {
-	public String keyword = "";
-	public AnmiationResource(String type, int cols, int rows) {
+	public AnmiationResource(String keyword, int cols, int rows) {
 		super();
-		this.keyword = type;
+		this.keyword = keyword;
 		this.cols = cols;
 		this.rows = rows;
 	}
 	
+	public String keyword = "";
 	public int cols = 0;
 	public int rows = 0;		
 }	
