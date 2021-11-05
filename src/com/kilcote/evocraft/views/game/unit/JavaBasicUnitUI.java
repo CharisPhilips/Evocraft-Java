@@ -31,8 +31,8 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 		Arrays.asList(
 			new AnmiationResource("walk", 32, 4),
 			new AnmiationResource("strong", 32, 4),
-			new AnmiationResource("walk_flag", 32, 5),
-			new AnmiationResource("strong_flag", 32, 5)
+			new AnmiationResource("walk", 32, 4),
+			new AnmiationResource("walk_flag", 32, 5)
 		)
 	);
 
