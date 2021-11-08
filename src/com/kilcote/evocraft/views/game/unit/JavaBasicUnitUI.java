@@ -1,12 +1,18 @@
 package com.kilcote.evocraft.views.game.unit;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.kilcote.evocraft.common.StandaloneSettings;
 import com.kilcote.evocraft.engine.unit.JavaBasicUnitModel;
+import com.kilcote.evocraft.views.components.animation.SpriteView;
 import com.kilcote.evocraft.views.game._base.GameObjUI;
+import com.kilcote.evocraft.views.game.city.JavaBasicCityPane;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  { 
 	//---------------------------------------------- Constructor ----------------------------------------------
@@ -17,75 +23,97 @@ public class JavaBasicUnitUI extends GameObjUI<JavaBasicUnitModel>  {
 
 	///////////////////////////view///////////////////////////////
 
-	private Label text;
-	private Shape rectangle;
-	private double pixelPerTurnX, pixelPerTurnY;
-	private double shiftX, shiftY;
-	
+	private SpriteView unitModel;
 	protected Label selection;
-	
+
+	private static List<AnmiationResource> animation_data = new ArrayList<AnmiationResource>(
+		Arrays.asList(
+			new AnmiationResource("normal", 32, 4),
+			new AnmiationResource("strong", 32, 4),
+			new AnmiationResource("strong", 32, 4),
+			new AnmiationResource("elite", 32, 5)
+		)
+	);
+
 	@Override
 	public void InvalidateDraw() {
 		if (shape == null) {
 			shape = new JavaBasicUnitPane();
-			parent.getChildren().add(shape);
-			
-			RecalcGeometrySize();
-			this.rectangle = new Rectangle(20, 20);
-			
-			this.rectangle.setFill(StandaloneSettings.TownFills.get(getModel().playerId - 1));
-			this.rectangle.setStroke(StandaloneSettings.neutralTownStroke);
-			
-			SetElipseColor(rectangle, this.getModel().playerId);
-			shape.getChildren().add(rectangle);
 
-			text = new Label();
-			text.setTextFill(StandaloneSettings.TownStrokes.get(getModel().playerId - 1));
-			shape.getChildren().add(text);
-			
-			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth());
-			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight());
-		}
-		text.setText(String.valueOf(this.getModel().warriorsCnt));
-		pixelPerTurnX = this.shape.getWidth() / getModel().tickPerTurn;
-		pixelPerTurnY = this.shape.getHeight() / getModel().tickPerTurn;
-		
-		SetShapeProperties();
-		if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getKey() > getModel().path.get(getModel().currPathIndex + 1).getKey())) {
-			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() - getModel().currTickOnCell * pixelPerTurnX + shiftX);
-		} else if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getKey() < getModel().path.get(getModel().currPathIndex + 1).getKey())) {
-			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() + getModel().currTickOnCell * pixelPerTurnX + shiftX);
-		} else if (getModel().currPathIndex < getModel().path.size()) {
-			shape.setTranslateX(getModel().path.get(getModel().currPathIndex).getKey() * this.shape.getWidth() + shiftX);
-		}
+			List<Node> cities = parent.getChildren().stream().filter(data->data instanceof JavaBasicCityPane).collect(Collectors.toList());
 
-		if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getValue() > getModel().path.get(getModel().currPathIndex + 1).getValue())) {
-			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() - getModel().currTickOnCell * pixelPerTurnY + shiftY);
-		} else if (getModel().currPathIndex < getModel().path.size() - 1 && (getModel().path.get(getModel().currPathIndex).getValue() < getModel().path.get(getModel().currPathIndex + 1).getValue())) {
-			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() + getModel().currTickOnCell * pixelPerTurnY + shiftY);
-		} else if (getModel().currPathIndex < getModel().path.size()) {
-			shape.setTranslateY(getModel().path.get(getModel().currPathIndex).getValue() * this.shape.getHeight() + shiftY);
+			int minIndex = (int) Double.POSITIVE_INFINITY;
+			for (Node city : cities) {
+				int nIndex = parent.getChildren().indexOf(city);
+				if (nIndex != -1) {
+					if (minIndex > nIndex) {
+						minIndex = nIndex;
+					}
+				}
+			}
+			parent.getChildren().add(minIndex, shape);
+		} else if (shape.getWidth() != 0 || shape.getHeight() != 0) {
+			if (unitModel == null) {
+				
+				unitModel = new SpriteView(
+						String.format("animation/unit%d_%s.png", getModel().playerId, animation_data.get(getModel().type).keyword),
+						animation_data.get(getModel().type).cols,
+						animation_data.get(getModel().type).rows,
+						32,
+						shape.getWidth(),
+						shape.getHeight()
+						);
+				shape.getChildren().add(unitModel);
+				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
+				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
+			}
+
+			SetShapeProperties();
+
 		}
 	}
-	
+
 	public void SetShapeProperties() {
-		if (this.shape.getWidth() == 0 && this.shape.getHeight() == 0) {
-			rectangle.setVisible(false);
-			text.setVisible(false);
-		} else {
-			rectangle.setVisible(true);
-			text.setVisible(true);
-			rectangle.setLayoutX(this.shape.getWidth() / 2 - (rectangle.getBoundsInLocal().getWidth() / 2));
-			rectangle.setLayoutY(this.shape.getHeight() / 2 - (rectangle.getBoundsInLocal().getHeight() / 2));
-			text.setLayoutX(this.shape.getWidth() / 2 - (text.getWidth() / 2));
-			text.setLayoutY(this.shape.getHeight() / 2 - (text.getHeight() / 2));
+		Integer direction = getModel().GetDirection();
+		if (direction != null) {
+			unitModel.draw(direction, (getModel().currTickOnCell / getModel().moveSteps));
+			unitModel.setLayoutX(this.shape.getWidth() / 2 - (unitModel.getBoundsInLocal().getWidth() / 2));
+			unitModel.setLayoutY(this.shape.getHeight() / 2 - (unitModel.getBoundsInLocal().getHeight() / 2));
+
+			switch (direction) {
+			case JavaBasicUnitModel.RIGHT_PATH:
+				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) + ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell));
+				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
+				break;
+			case JavaBasicUnitModel.TOP_PATH:
+				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
+				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) - (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell));
+
+				break;
+			case JavaBasicUnitModel.LEFT_PATH:
+				shape.setTranslateX((this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey()) - ((getModel().currTickOnCell) * this.shape.getWidth()) / (StandaloneSettings.stepTicks_PerCell));
+				shape.setTranslateY(this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue());
+				break;
+			case JavaBasicUnitModel.BOTTOM_PATH:
+				shape.setTranslateX(this.shape.getWidth() * getModel().path.get(getModel().currPathIndex).getKey());
+				shape.setTranslateY((this.shape.getHeight() * getModel().path.get(getModel().currPathIndex).getValue()) + (getModel().currTickOnCell * this.shape.getHeight()) / (StandaloneSettings.stepTicks_PerCell));
+
+				break;
+			}
 		}
 	}
-	
-	protected void RecalcGeometrySize() {
-		pixelPerTurnX = StandaloneSettings.oneCellSizeX / getModel().tickPerTurn;
-		pixelPerTurnY = StandaloneSettings.oneCellSizeY / getModel().tickPerTurn;
-		shiftX = 0;
-		shiftY = 0;
-	}
+
 }
+
+class AnmiationResource {
+	public AnmiationResource(String keyword, int cols, int rows) {
+		super();
+		this.keyword = keyword;
+		this.cols = cols;
+		this.rows = rows;
+	}
+	
+	public String keyword = "";
+	public int cols = 0;
+	public int rows = 0;		
+}	

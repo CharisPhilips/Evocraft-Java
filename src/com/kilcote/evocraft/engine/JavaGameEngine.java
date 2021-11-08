@@ -91,11 +91,10 @@ public class JavaGameEngine extends AnimationTimer {
 	}
 
 	private void Loop() {
-		this.engine.Loop();
 		if (mUIGeneartor instanceof JavaUI) {
 			gameMap.getUI().InvalidateDraw();
 		}
-		gameMap.Tick();
+		this.engine.Loop();
 		WinProcess();
 	}
 

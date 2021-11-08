@@ -9,7 +9,6 @@ import com.kilcote.evocraft.engine.map.JavaGameMap;
 import com.kilcote.evocraft.engine.unit.BasicUnitModel;
 import com.kilcote.evocraft.views.game._base.GameObjCellUI;
 import com.kilcote.evocraft.views.game.cell.JavaGameCellUI;
-import com.kilcote.evocraft.views.game.city.JavaBasicCityUI;
 import com.kilcote.evocraft.views.game.unit.JavaBasicUnitPane;
 import com.kilcote.evocraft.views.game.unit.JavaBasicUnitUI;
 
@@ -32,6 +31,10 @@ public class JavaGameMapUI extends GameObjCellUI<JavaGameMap> {
 		for (int y = 0; y < getModel().getSizeY(); y++) {
 			for (int x = 0; x < getModel().getSizeX(); x++) {
 				((IGameObjModel<JavaGameCellUI>) getModel().getMapCell(y, x)).getUI().InitalizeCell(parent, x, y);
+			}
+		}
+		for (int y = 0; y < getModel().getSizeY(); y++) {
+			for (int x = 0; x < getModel().getSizeX(); x++) {
 				if (getModel().getMapCell(y, x).city != null) {
 					((JavaBasicCityModel) getModel().getMapCell(y, x).city).getUI().InitalizeCell(parent, x, y);
 				}
@@ -46,7 +49,6 @@ public class JavaGameMapUI extends GameObjCellUI<JavaGameMap> {
 				((IGameObjModel<JavaGameCellUI>) getModel().getMapCell(y, x)).getUI().InvalidateDraw();
 				if (getModel().getMapCell(y, x).city != null) {
 					((JavaBasicCityModel) getModel().getMapCell(y, x).city).getUI().InvalidateDraw();
-
 				}
 			}
 		}
