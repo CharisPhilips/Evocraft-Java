@@ -134,34 +134,18 @@ public class JavaBasicCityUI extends GameObjCellUI<JavaBasicCityModel> {
 		switch (getModel().playerId) {
 		case 1: case 2: case 3: case 4:
 			if (cityModel == null) {
-				if (getModel().type == JavaBasicCityModel.TYPE_WONDER) {
-					cityModel = ResourceUtils.getResourceImageView(String.format("cities/%s_p%d.png", city_types[getModel().type], getModel().playerId), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
-				} else {
-					cityModel = ResourceUtils.getResourceImageView(String.format("cities/%s_p%d_s4_l%d.png", city_types[getModel().type], getModel().playerId, getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
-				}
+				cityModel = ResourceUtils.getResourceImageView(String.format("cities/%s_p%d_s4_l%d.png", city_types[getModel().type], getModel().playerId, getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
 				shape.getChildren().add(cityModel);
 			} else {
-				if (getModel().type == JavaBasicCityModel.TYPE_WONDER) {
-					((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/%s_p%d.png", city_types[getModel().type], getModel().playerId), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
-				} else {
-					((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/%s_p%d_s4_l%d.png", city_types[getModel().type], getModel().playerId, getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
-				}
+				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/%s_p%d_s4_l%d.png", city_types[getModel().type], getModel().playerId, getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
 			}
 			break;
 		default:
 			if (cityModel == null) {
-				if (getModel().type == JavaBasicCityModel.TYPE_WONDER) {
-					cityModel = ResourceUtils.getResourceImageView(String.format("cities/%s_p0.png", city_types[getModel().type]), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
-				} else {
-					cityModel = ResourceUtils.getResourceImageView(String.format("cities/%s_p0_s4_l%d.png", city_types[getModel().type], getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
-				}
+				cityModel = ResourceUtils.getResourceImageView(String.format("cities/%s_p0_s4_l%d.png", city_types[getModel().type], getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true);
 				shape.getChildren().add(cityModel);
 			} else {
-				if (getModel().type == JavaBasicCityModel.TYPE_WONDER) {
-					((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/%s_p0.png", city_types[getModel().type]), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
-				} else {
-					((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/%s_p0_s4_l%d.png", city_types[getModel().type], getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
-				}
+				((ImageView)cityModel).setImage(ResourceUtils.getResourceImage(String.format("cities/%s_p0_s4_l%d.png", city_types[getModel().type], getModel().level), shape.getWidth() * StandaloneSettings.cityRatio, shape.getHeight() * StandaloneSettings.cityRatio, true, true));
 			}
 		}
 		((ImageView)cityModel).setLayoutX(this.shape.getWidth() / 2 - (((ImageView)cityModel).getImage().getWidth() / 2));
